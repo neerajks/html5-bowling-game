@@ -1,0 +1,104 @@
+
+<html><head>
+    <title>WebSocket Chat</title>
+    <script  type= "text/javascript "  src= "javascript/jquery.js"> </script> 
+    <script  type= "text/javascript "  src= "javascript/bowlingaudio.js"> </script> 
+    <script type='text/javascript'>
+
+      if (!window.WebSocket && window.MozWebSocket)
+        window.WebSocket=window.MozWebSocket;
+      if (!window.WebSocket)
+        alert("WebSocket not supported by this browser");
+    
+      function $() { return document.getElementById(arguments[0]); }
+      function $F() { return document.getElementById(arguments[0]).value; }
+      
+      function getKeyCode(ev) { if (window.event) return window.event.keyCode; return ev.keyCode; } 
+      
+      var room = {
+        join: function() {
+          
+          var urls=document.location.toString().replace('http://','ws://').replace('https://','wss://');
+          var location=urls.substring(0,urls.indexOf("bowling"))+"bowling/bajax/";
+          this._ws=new WebSocket(location,"bajax");
+          this._ws.onopen=this._onopen;
+          this._ws.onmessage=this._onmessage;
+          this._ws.onclose=this._onclose;
+        },
+        
+        _onopen: function(){
+         	room._send('connect');
+        },
+        
+        _send: function(message){
+         
+          if (this._ws)
+            this._ws.send(message);
+        },
+      _onmessage: function(m) {
+          if ('connect'!=m.data){
+             var result = JSON.parse(m.data);
+             if(result.g!= undefined){
+             	 var score=room._returnscore(result.g,result.sendor);
+	             jsonresult='{"username":"'+result.username+'","'
+	             		   +'score":"'+room._returnscore(result)+'"}';
+	             room._send(jsonresult);
+             }
+             var status;
+             if(result.username!= undefined && result.status=='0')
+             		status='waiting..';
+             if(result.username!= undefined && result.status=='1')
+             		status='go'
+             if(result.username!= undefined && result.order=='1'){
+             	$('A').className='';
+             	$('playa').innerHTML='<b>'+result.username+'--score£º'+result.score+'--status:'+status+'</b>';
+             }
+             if(result.username!= undefined && result.order=='2'){
+             	$('B').className='';
+             	$('playb').innerHTML='<b>'+result.username+'--score£º'+result.score+'--status:'+status+'</b>';
+             }
+             if(result.username!= undefined && result.order=='3'){
+             	$('C').className='';
+             	$('playc').innerHTML='<b>'+result.username+'--score£º'+result.score+'--status:'+status+'</b>';
+             }
+           }
+        },
+        
+        _onclose: function(m) {
+          this._ws=null;
+          
+        },
+        _returnscore:function(g,sendor){
+        	runCmd();
+        	return 9;
+        }
+        
+      };
+      
+    </script>
+    <style type='text/css'>
+    	div.hidden { display: none; }
+    </style>
+</head><body>
+<input type="button" value="server" id="watch"/>
+<a href="test/deviceorientation.html">testdeviceorientation</a>
+<div id='A' class='hidden'>
+	<span id="playa"></span>
+	<input type="hidden"  value="" id="a"/>
+</div>
+<div id='B' class='hidden'>
+	<span id="playb"></span>
+	<input type="hidden"  value="" id="b"/>
+</div>
+<div id='C' class='hidden'>
+	<span id="playc"></span>
+	<input type="hidden"  value="" id="c"/>
+</div>
+<script type='text/javascript'>
+	$('watch').onclick = function(event) { room.join(); return false; };
+</script>
+
+</body></html>
+        
+        
+        
