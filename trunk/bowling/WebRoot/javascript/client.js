@@ -230,7 +230,3 @@ function setPropertyInStyleSheets(selector, elem, rules, styleSheetIndex) {
     return false;
   }
 }
-
-window.onerror = function() {
-  alert(e.error);
-}
