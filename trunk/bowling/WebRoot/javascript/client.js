@@ -184,12 +184,12 @@ function setAnimationDuring() {
   var speed = circumference / BALL_ANIMATION_DURING;
   var traceLength = window.innerHeight + width * 2;
   animationDuring = traceLength / speed;
-  setPropertyInStyleSheets('#ball', ball, {
+  setPropertyInStyleSheets('#ball', {
     top: window.innerHeight + 'px',
     '-webkit-transition-duration': animationDuring + 's, 0.1s'
   }, 0);
 
-  setPropertyInStyleSheets('#ball.show', ball, {
+  setPropertyInStyleSheets('#ball.show', {
     top: -BALL_WIDTH * 2 + 'px'
   }, 0);
 }
@@ -204,7 +204,7 @@ function throwBall() {
   }, animationDuring * 1000)
 }
 
-function setPropertyInStyleSheets(selector, elem, rules, styleSheetIndex) {
+function setPropertyInStyleSheets(selector, rules, styleSheetIndex) {
   var styleSheet;
   var styleSheets = document.styleSheets;
   if (styleSheetIndex) {
