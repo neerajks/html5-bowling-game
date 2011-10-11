@@ -1,0 +1,42 @@
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+#ball-wrapper {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 100%;
+}
+
+#ball {
+  margin: 0 auto;
+  position: relative;
+  width: 100px;
+  height: 100px;
+  background: transparent url(../images/ball.gif) no-repeat;
+  background-size: cover;
+  opacity: 0;
+  -webkit-transition: top 1.2s linear 0s, opacity .5s ease-out 0s;
+}
+
+#ball.show {
+  opacity: 1;
+}
+
+span.hidden {
+  display: none;
+}
+
+.btn {
+  border: #7b9ebd 1px solid;
+  padding: 2px 2px 0;
+}
+
+.test {
+  width: 200px;
+}

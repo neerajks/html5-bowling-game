@@ -1,60 +1,49 @@
+<!doctype html>
 <html>
-	<head>
-    	<title>bowling</title>
-    	<link rel="stylesheet" href="css/view.css">
-    	<script  type= "text/javascript "  src= "javascript/jquery.js"> </script> 
-	    <script type='text/javascript' src="javascript/client.js"></script>
-		 <style type='text/css'>
-    		span.hidden { display: none; }
-    		.btn {
-			   BORDER-RIGHT: #7b9ebd 1px solid; PADDING-RIGHT: 2px; BORDER-TOP: 
-			#7b9ebd 1px solid; PADDING-LEFT: 2px; FONT-SIZE: 12px; FILTER: 
-			progid:DXImageTransform.Microsoft.Gradient(GradientType=0, 
-			StartColorStr=#ffffff, EndColorStr=#cecfde); BORDER-LEFT: #7b9ebd 
-			1px solid; CURSOR: hand; COLOR: black; PADDING-TOP: 2px; 
-			BORDER-BOTTOM: #7b9ebd 1px solid
-			}
-			.test{     
-			width:200px;     
-			} 
-    	</style>
+<head>
+  <title>Bowling Client</title>
+  <link rel="stylesheet" href="css/client.css">
+  <script src= "javascript/jquery.js"> </script>
+  <script src="javascript/client.js"></script>
 </head>
 <body class="login_index" onload="init()">
-
 <div class="login">
-	<div class="login_main">
-		<div class="login_form" id="login" >
-				<div class="login_content" id="web_login">
-						<ul>
-							<li><span>&#x5E10;&#x3000;&#x53F7;&#xFF1A;</span><input type="text"  id="username" name="u" tabindex="2" class="login_txtbox"/></li>
-					 	</ul>
-						<div class="login_button">
-							<input type="submit" value="&#x767B;&#x5F55;" tabindex="6" id="submit" />
-						</div>
-				</div>
-		</div>
-		
-		<div id="choice" class="login_form" style="display: none" >
-					<div class="login_content" >
-					   <input type="button" class="btn test"  id="1" onclick="room.choicejoinnumber(this)" value="&#x5355;&#x4EBA;&#x6E38;&#x620F;"/>
-					   <br/>
-					   <input type="button" class="btn test"  id="2" onclick="room.choicejoinnumber(this)" value="&#x5BF9;&#x6218;"/>
-					   <br/>
-					   <input type="button" class="btn test"  id="3" onclick="room.choicejoinnumber(this)" value="&#x4E09;&#x4EBA;&#x6E38;&#x620F;"/>
-					</div>
-		</div>
-		
-		<div id="wait" class="login_form" style="display: none" >
-					<div class="login_content" >
-						<input type="button" class="btn test" id="begin" onclick="room.choicejoinnumber(this)" value="waiting"/>
-					</div>
-		</div>
-		<span id="infor"></span>
-		
-	</div>
+  <div class="login_main">
+    <div class="login_form" id="login" >
+        <div class="login_content" id="web_login">
+            <ul>
+              <li><span>&#x5E10;&#x3000;&#x53F7;&#xFF1A;</span><input type="text" id="username" name="u" tabindex="2" class="login_txtbox"/></li>
+             </ul>
+            <div class="login_button">
+              <input type="submit" value="&#x767B;&#x5F55;" tabindex="6" id="submit" />
+            </div>
+        </div>
+    </div>
+    
+    <div id="choice" class="login_form" style="display: none" >
+          <div class="login_content" >
+             <input type="button" class="btn test"  id="1" onclick="room.choicejoinnumber(this)" value="&#x5355;&#x4EBA;&#x6E38;&#x620F;"/>
+             <br/>
+             <input type="button" class="btn test"  id="2" onclick="room.choicejoinnumber(this)" value="&#x5BF9;&#x6218;"/>
+             <br/>
+             <input type="button" class="btn test"  id="3" onclick="room.choicejoinnumber(this)" value="&#x4E09;&#x4EBA;&#x6E38;&#x620F;"/>
+          </div>
+    </div>
+    
+    <div id="wait" class="login_form" style="display: none" >
+          <div class="login_content" >
+            <input type="button" class="btn test" id="begin" onclick="room.choicejoinnumber(this)" value="waiting"/>
+          </div>
+    </div>
+    <span id="infor"></span>
+    
+  </div>
+</div>
+<div id="ball-wrapper">
+  <div id="ball"></div>
 </div>
 <script type='text/javascript'>
-		$('submit').onclick = function(event) { room.login($F('username')); return false; };
+    $('submit').onclick = function(event) { room.login($F('username')); return false; };
 </script>
 </body>
 
