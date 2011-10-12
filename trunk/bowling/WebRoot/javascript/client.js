@@ -197,10 +197,9 @@ function setAnimationDuring() {
 setAnimationDuring();
 
 function throwBall() {
-  var ball = document.getElementById('ball');
-  ball.className = 'show';
+  $('#ball').addClass('show');
   setTimeout(function() {
-    ball.className = '';
+    $('#ball').removeClass('show');
   }, animationDuring * 1000)
 }
 

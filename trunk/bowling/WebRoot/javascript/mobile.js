@@ -96,3 +96,69 @@ var Client = {
 };
 
 Client.init();
+
+const BALL_ANIMATION_DURING = 0.8; // in ms
+const BALL_SIZE = 100;
+var animationDuring;
+
+function initBallPosition() {
+  $('#ball').css('top', (window.innerHeight - BALL_SIZE) + 'px');
+}
+
+function setAnimationDuring() {
+  var ball = document.getElementById('ball');
+  var width = BALL_SIZE;
+  var radius = width / 2;
+  var circumference = 2 * Math.PI * radius;
+  var speed = circumference / BALL_ANIMATION_DURING;
+  var traceLength = window.innerHeight + width * 2;
+  animationDuring = traceLength / speed;
+//  setPropertyInStyleSheets('#ball', {
+//    top: window.innerHeight + 'px',
+//    '-webkit-transition-duration': animationDuring + 's, 0.1s'
+//  }, 0);
+//
+//  setPropertyInStyleSheets('#ball.show', {
+//    top: -BALL_WIDTH * 2 + 'px'
+//  }, 0);
+}
+
+setAnimationDuring();
+initBallPosition();
+function throwBall() {
+  $('#ball').addClass('show').css('top', '200px');
+//  setTimeout(function() {
+//    $('#ball').removeClass('show');
+//  }, animationDuring * 1000)
+}
+
+function setPropertyInStyleSheets(selector, rules, styleSheetIndex) {
+  var styleSheet;
+  var styleSheets = document.styleSheets;
+  if (styleSheetIndex) {
+    styleSheet = styleSheets[styleSheetIndex];
+  } else  {
+    for (var i = 0, l = styleSheets.length; i < l; i++) {
+      if(setPropertyInStyleSheet(styleSheets.item(i)))
+        break;
+    }
+  }
+
+  function setPropertyInStyleSheet(styleSheet) {
+    var cssRules = styleSheet.cssRules;
+    for (var i = 0, l = cssRules.length; i < l; i++) {
+      var cssRule = cssRules.item(i);
+      if (selector == cssRule.selectorText) {
+        for (var prop in rules) {
+          cssRule.style.setProperty(prop, rules[prop]);
+        }
+        return true;
+      }
+    }
+    return false;
+  }
+}
+
+setTimeout(function() {
+  throwBall();
+}, 2000);

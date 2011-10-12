@@ -43,7 +43,7 @@ button, input {
 }
 
 #login, #game-mode, #waiting-others-message,
-#start-game-tip-message, #main-message, #game-info, #score-info {
+#start-game-tip-message, #main-message, #game-info, #score-info, #game-result-wrapper {
   display: none;
 }
 
@@ -153,22 +153,27 @@ ul#waiting-others-message > li {
 
 #ball-wrapper {
   position: absolute;
-  top: 0;
+  bottom: 0;
+  width: 100%;
   height: 100%;
-  z-index: -1;
+  pointer-events: none;
 }
 
 #ball {
-  margin: 0 auto;
   position: relative;
+  margin: 0 auto;
   width: 100px;
   height: 100px;
   background: transparent url(../images/ball.gif) no-repeat;
-  background-size: cover;
-  opacity: 0;
-  -webkit-transition: top 1.2s linear 0s, opacity .5s ease-out 0s;
+  background-size: 100% 100%;
+  opacity: 1;
+  -webkit-transition: width 3s linear 0s, height 3s linear 0s,
+    top 2s linear 0s, opacity 1.9s linear 0s;
 }
 
 #ball.show {
-  opacity: 1;
+  width: 0;
+  height: 0;
+  display: block;
+  opacity: 0;
 }
