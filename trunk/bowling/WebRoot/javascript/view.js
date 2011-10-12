@@ -46,15 +46,15 @@ if (!window.WebSocket && window.MozWebSocket)
              		status='go'
              if(result.username!= undefined && result.order=='1'){
              	$('A').className='';
-             	$('playa').innerHTML='<b>Íæ¼Ò£º'+result.username+',µÃ·Ö£ºscore£º'+result.score+',status:'+status+'</b>';
+             	$('playa').innerHTML='<b>ï¿½ï¿½Ò£ï¿½'+result.username+',ï¿½Ã·Ö£ï¿½scoreï¿½ï¿½'+result.score+',status:'+status+'</b>';
              }
              if(result.username!= undefined && result.order=='2'){
              	$('B').className='';
-             	$('playb').innerHTML='<b> Íæ¼Ò£º'+result.username+',µÃ·Ö£ºscore£º'+result.score+'--status:'+status+'</b>';
+             	$('playb').innerHTML='<b> ï¿½ï¿½Ò£ï¿½'+result.username+',ï¿½Ã·Ö£ï¿½scoreï¿½ï¿½'+result.score+'--status:'+status+'</b>';
              }
              if(result.username!= undefined && result.order=='3'){
              	$('C').className='';
-             	$('playc').innerHTML='<b> Íæ¼Ò£º'+result.username+',µÃ·Ö£ºscore£º'+result.score+'--status:'+status+'</b>';
+             	$('playc').innerHTML='<b> ï¿½ï¿½Ò£ï¿½'+result.username+',ï¿½Ã·Ö£ï¿½scoreï¿½ï¿½'+result.score+'--status:'+status+'</b>';
              }
            }
         },
@@ -68,14 +68,15 @@ if (!window.WebSocket && window.MozWebSocket)
         	return 9;
         },
         init:function(){
-       	 var qrCodeImage = document.getElementById('qrCode');
+          var qrCode = document.getElementById('qrCode');
            var url = 'http://' + location.host + '/bowling/bowlingajaxindex.html';
            $('client-url').innerHTML = url;
-           var width = 150;
-           var height = 150;
-           qrCodeImage.src = 'http://chart.apis.google.com/chart?chs=' + width +
+          $('client-url').setAttribute('href', url);
+           var width = 180;
+           var height = 180;
+           qrCode.style.backgroundImage = 'url(http://chart.apis.google.com/chart?chs=' + width +
              'x' + height +
              '&cht=qr&chld=L%7C1&choe=UTF-8&chl=BEGIN%3AVCARD%0AVERSION%3A3.0%0AURL%3A' +
-             url + '%0AEND%3AVCARD';
+             url + '%0AEND%3AVCARD)';
        }
       };

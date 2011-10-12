@@ -1,39 +1,42 @@
+<!doctype html>
+<html>
+<head>
+  <title>Bowling View</title>
+  <meta charset="utf-8">
+  <script type="text/javascript" src="javascript/jquery.js"> </script>
+  <script type="text/javascript" src="javascript/bowlingaudio.js"></script>
+  <script type="text/javascript" src="javascript/view.js"></script>
+  <link rel="stylesheet" href="css/view.css">
+</head>
+<body>
 
-<html><head>
-    <title>bowling</title>
-    
-    <script  type= "text/javascript "  src= "javascript/jquery.js"> </script> 
-    <script  type= "text/javascript "  src= "javascript/bowlingaudio.js"> </script> 
-    <script type='text/javascript' src="javascript/view.js"></script>
-	<style type='text/css'>
-    	div.hidden { display: none; }
-    </style>
-</head><body>
-
-<div id='A' class='hidden'>
-	<span id="playa"></span>
-	<input type="hidden"  value="" id="a"/>
-</div>
-<div id='B' class='hidden'>
-	<span id="playb"></span>
-	<input type="hidden"  value="" id="b"/>
-</div>
-<div id='C' class='hidden'>
-	<span id="playc"></span>
-	<input type="hidden"  value="" id="c"/>
-</div>
-<div id="wait-zone">
-  <div id="last-battle-result"></div>
-  <p>Waiting for player login...</p>
-  <p>You can login by visiting <strong id="client-url"></strong><br> or using <strong>QR code</strong> below to get url:</p>
-  <img id="qrCode">
+<!--<div id='A' class='hidden'>-->
+  <!--<span id="playa"></span>-->
+  <!--<input type="hidden"  value="" id="a"/>-->
+<!--</div>-->
+<!--<div id='B' class='hidden'>-->
+  <!--<span id="playb"></span>-->
+  <!--<input type="hidden"  value="" id="b"/>-->
+<!--</div>-->
+<!--<div id='C' class='hidden'>-->
+  <!--<span id="playc"></span>-->
+  <!--<input type="hidden"  value="" id="c"/>-->
+<!--</div>-->
+<div id="waiting-wrapper">
+  <div id="waiting-zone">
+    <div id="qrCode"></div>
+    <div id="game-tip">
+      <p>等待其他玩家登录...</p>
+      <p>你可以访问：</p>
+      <p><a id="client-url"></a></p>
+      <p>或通过左侧的二维码</strong>登录游戏</p>
+    </div>
+  </div>
 </div>
 <script type='text/javascript'>
-	room.init();
-	room.join();
+  room.init();
+  room.join();
 </script>
 
-</body></html>
-        
-        
-        
+</body>
+</html>
