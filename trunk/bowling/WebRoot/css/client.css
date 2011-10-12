@@ -5,7 +5,7 @@ html, body {
 }
 
 body {
-  font-size: 25px;
+  font-size: 20px;
   font-family: Verdana, Arial, sans-serif;
   color: white;
   background: white url(../images/bg5.jpg) 0 0 no-repeat;
@@ -27,6 +27,7 @@ button, input {
   background-color: transparent;
   box-shadow: 0 0 7px #555;
   border-radius: 10px;
+  outline: none;
 }
 
 #main-wrapper {
@@ -41,33 +42,32 @@ button, input {
   text-align: center;
 }
 
-#game-mode, #waiting-others-message, #start-game-tip-message,
-#main-message, #game-info, #score-info {
+#login, #game-mode, #waiting-others-message,
+#start-game-tip-message, #main-message, #game-info, #score-info {
   display: none;
 }
 
 #username {
-  width: 274px;
-  height: 68px;
+  width: 228px;
+  height: 55px;
   color: #3f89ad;
   background-image: url(../images/input_field.png);
   text-align: center;
   text-align: center;
   font-size: 23px;
-  padding: 0 15px;
+  padding: 2px 15px;
   margin-bottom: 20px;
-  outline: none;
 }
 
 #login-button {
-  width: 202px;
-  height: 61px;
-  background-image: url(../images/login.png);
+  width: 256px;
+  height: 56px;
+  background-image: url(../images/login_button.png);
 }
 
 #game-mode > button {
-  width: 159px;
-  height: 74px;
+  width: 163px;
+  height: 58px;
   margin: 0 20px 20px 0;
 }
 
@@ -84,11 +84,16 @@ button, input {
 }
 
 #waiting-others-message, #start-game-tip-message {
-  width: 248px;
-  height: 146px;
+  width: 187px;
+  height: 129px;
   background-image: url(../images/waiting_message_bg.png);
-  padding: 42px 35px;
+  padding: 28px 35px;
   color: white;
+}
+
+#start-game-tip-message {
+  width: 257px;
+  padding: 28px 0;
 }
 
 ul#waiting-others-message > li {
@@ -97,18 +102,32 @@ ul#waiting-others-message > li {
 }
 
 #start-button {
-  width: 158px;
+  width: 219px;
   height: 55px;
   margin-top: 35px;
   background-image: url(../images/start_button.png);
 }
 
 #main-message {
-  width: 223px;
-  height: 205px;
+  width: 204px;
+  height: 159px;
   color: #3f89ad;
-  padding: 45px 70px 0 70px;
+  text-align: left;
+  padding: 25px 30px 0 30px;
   background: url(../images/main_message_bg.png), url(../images/touch_tip_bg.png);
+}
+
+#game-result {
+  width: 264px;
+  height: 183px;
+  background: transparent url(../images/win.png) 0 0 no-repeat;
+}
+
+#restart-button {
+  width: 225px;
+  height: 50px;
+  margin-top: 15px;
+  background: white url(../images/restart_button.png) 0 0 no-repeat;
 }
 
 #game-info {
@@ -117,16 +136,16 @@ ul#waiting-others-message > li {
   padding: 15px 0;
   bottom: 0;
   text-align: center;
-  font-size: 35px;
+  font-size: 17px;
 }
 
-#game-info > span, #game-info > span > span{
-  margin-right: 35px;
+#player-name, #current-inning-score {
+  margin-right: 15px;
 }
 
 #player-name {
   display: inline-block;
-  max-width: 150px;
+  max-width: 60px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;

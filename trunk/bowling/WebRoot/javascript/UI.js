@@ -46,6 +46,19 @@ var UI = {
     $('#main-message').hide();
   },
 
+  /**
+   *
+   * @param {String} result win or lose
+   */
+  showGameResult: function(result) {
+    $('#game-result-wrapper').show();
+    $('#game-result').css('background-image', 'url(images/' + result + '.png)');
+  },
+
+  hideGameResult: function() {
+    $('#game-result-wrapper').hide();
+  },
+
   showGameInfo: function(playerName) {
     $('#game-info').show();
     $('#player-name').text(playerName).attr('title', playerName);
