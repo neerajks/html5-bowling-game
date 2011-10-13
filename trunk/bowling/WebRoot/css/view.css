@@ -7,7 +7,46 @@ html, body {
 }
 
 body {
+  font-size: 14px;
+  font-family: 'Merriweather', "Microsoft YaHei",Segoe UI,Tahoma,Arial,Verdana,sans-serif;
+}
 
+#scores-wrapper {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  width: 460px;
+  background: transparent url(../images/scoring_background.png) 0 0 no-repeat;
+  background-size: 100% 100%;
+  padding: 12px;
+}
+
+#mytable {
+  border-collapse: collapse;
+  table-layout: fixed;
+  border-spacing: 0;
+  border: 1px solid #ace3f8;
+  width: 450px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+th {
+  border-top: 1px solid transparent;;
+}
+
+tr > td:first-child, tr > th:first-child {
+  border-left: 1px solid transparent;
+  width:70px;
+}
+
+tr > td:last-child, tr > th:last-child {
+  border-right: 1px solid transparent;
+  width: 50px;
+}
+
+tbody > tr:last-child > td {
+  border-bottom: 1px solid transparent;
 }
 
 #waiting-wrapper {
@@ -17,7 +56,7 @@ body {
   -webkit-box-pack: center;
   -webkit-box-align: center;
   background: white url(../images/waiting_wrapper_bg.png) 0 0 no-repeat;
-  background-size: 100% 100%;
+  background-size: cover;
 }
 
 #waiting-zone {
