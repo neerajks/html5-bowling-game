@@ -2,3 +2,12 @@
   font-size: 35px;
   max-width: 150px;
 }
+
+body {
+  background-image: url(../images/bg_for_pad.jpg);
+}
+
+#ball {
+  width: 150px;
+  height: 150px;
+}

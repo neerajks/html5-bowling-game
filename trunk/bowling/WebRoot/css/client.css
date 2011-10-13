@@ -160,20 +160,20 @@ ul#waiting-others-message > li {
 }
 
 #ball {
+  display: none;
   position: relative;
   margin: 0 auto;
-  width: 100px;
-  height: 100px;
+  width: 80px;
+  height: 80px;
   background: transparent url(../images/ball.gif) no-repeat;
   background-size: 100% 100%;
   opacity: 1;
   -webkit-transition: width 3s linear 0s, height 3s linear 0s,
-    top 2s linear 0s, opacity 1.9s linear 0s;
+    top 3s linear 0s, opacity 3s linear 0s;
 }
 
 #ball.show {
-  width: 0;
-  height: 0;
-  display: block;
+  width: 30px;
+  height: 30px;
   opacity: 0;
 }

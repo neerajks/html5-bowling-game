@@ -97,68 +97,46 @@ var Client = {
 
 Client.init();
 
-const BALL_ANIMATION_DURING = 0.8; // in ms
-const BALL_SIZE = 100;
-var animationDuring;
+var ballSize = 80;
+var throwBallTimer;
+var isPad = false;
+var ballTargetTop = 200;
+
+function checkSupport() {
+  var ua = navigator.userAgent;
+  var iosBrowserPattern = /(iPad|iPhone|iPod).+OS\s\d/;
+  var androidBrowserPattern = /Android\s(\d)/;
+  var matchIos = iosBrowserPattern.exec(ua);
+  var matchAndroid = androidBrowserPattern.exec(ua);
+  if (matchIos && matchIos[1] == 'iPad' ||
+      matchAndroid && matchAndroid[1] >= 3)
+    isPad = true;
+  return (matchIos || matchAndroid) &&
+    (window.DeviceOrientationEvent || window.TouchEvent);
+}
+
+if (!this.checkSupport()) {
+  throw new Error();
+}
+if (isPad) {
+  $.addStyleSheet('css/client_for_pad.css');
+  ballTargetTop = 450;
+  ballSize = 150;
+}
 
 function initBallPosition() {
-  $('#ball').css('top', (window.innerHeight - BALL_SIZE) + 'px');
+  $('#ball').css('top', (document.documentElement.scrollHeight - ballSize) + 'px');
 }
-
-function setAnimationDuring() {
-  var ball = document.getElementById('ball');
-  var width = BALL_SIZE;
-  var radius = width / 2;
-  var circumference = 2 * Math.PI * radius;
-  var speed = circumference / BALL_ANIMATION_DURING;
-  var traceLength = window.innerHeight + width * 2;
-  animationDuring = traceLength / speed;
-//  setPropertyInStyleSheets('#ball', {
-//    top: window.innerHeight + 'px',
-//    '-webkit-transition-duration': animationDuring + 's, 0.1s'
-//  }, 0);
-//
-//  setPropertyInStyleSheets('#ball.show', {
-//    top: -BALL_WIDTH * 2 + 'px'
-//  }, 0);
-}
-
-setAnimationDuring();
 initBallPosition();
 function throwBall() {
-  $('#ball').addClass('show').css('top', '200px');
-//  setTimeout(function() {
-//    $('#ball').removeClass('show');
-//  }, animationDuring * 1000)
+  clearTimeout(throwBallTimer);
+  $('#ball').show();
+  setTimeout(function() {
+    $('#ball').addClass('show').css('top', ballTargetTop + 'px');
+  }, 0);
+  
+  throwBallTimer = setTimeout(function() {
+    $('#ball').hide().removeClass('show');
+    initBallPosition();
+  }, 3000)
 }
-
-function setPropertyInStyleSheets(selector, rules, styleSheetIndex) {
-  var styleSheet;
-  var styleSheets = document.styleSheets;
-  if (styleSheetIndex) {
-    styleSheet = styleSheets[styleSheetIndex];
-  } else  {
-    for (var i = 0, l = styleSheets.length; i < l; i++) {
-      if(setPropertyInStyleSheet(styleSheets.item(i)))
-        break;
-    }
-  }
-
-  function setPropertyInStyleSheet(styleSheet) {
-    var cssRules = styleSheet.cssRules;
-    for (var i = 0, l = cssRules.length; i < l; i++) {
-      var cssRule = cssRules.item(i);
-      if (selector == cssRule.selectorText) {
-        for (var prop in rules) {
-          cssRule.style.setProperty(prop, rules[prop]);
-        }
-        return true;
-      }
-    }
-    return false;
-  }
-}
-
-setTimeout(function() {
-  throwBall();
-}, 2000);
