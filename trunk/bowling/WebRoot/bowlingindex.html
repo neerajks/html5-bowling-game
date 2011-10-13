@@ -9,21 +9,28 @@
   <link rel="stylesheet" href="css/view.css">
 </head>
 <body>
-
-<!--<div id='A' class='hidden'>-->
-  <!--<span id="playa"></span>-->
-  <!--<input type="hidden"  value="" id="a"/>-->
-<!--</div>-->
-<!--<div id='B' class='hidden'>-->
-  <!--<span id="playb"></span>-->
-  <!--<input type="hidden"  value="" id="b"/>-->
-<!--</div>-->
-<!--<div id='C' class='hidden'>-->
-  <!--<span id="playc"></span>-->
-  <!--<input type="hidden"  value="" id="c"/>-->
-<!--</div>-->
 <div id="waiting-wrapper">
-  <div id="waiting-zone">
+<table id="mytable" cellspacing="0" border="1"> 
+<caption> </caption> 
+<tr > 
+<th  width="70" >玩家姓名</th> 
+<th  width="2">1</th> 
+<th  width="2">2</th> 
+<th  width="2">3</th>
+<th  width="2">4</th> 
+<th  width="2">5</th> 
+<th  width="2">6</th> 
+<th  width="2">7</th>  
+<th  width="2">8</th> 
+<th  width="2">9</th> 
+<th  width="2">10</th>
+<th  width="40">总分</th>
+</tr> 
+<tr id="tr1"></tr> 
+<tr id="tr2"></tr>
+<tr id="tr3"></tr>
+</table>
+<div id="waiting-zone">
     <div id="qrCode"></div>
     <div id="game-tip">
       <p>等待其他玩家登录...</p>
@@ -33,6 +40,10 @@
     </div>
   </div>
 </div>
+  <div id="main-message">
+  &#x8F6E;&#x5230;&#x4F60;&#x6254;&#x4FDD;&#x9F84;&#x7403;&#x4E86;&#x8BF7;&#x7528;&#x624B;&#x6307;&#x5212;&#x8FC7;&#x5C4F;&#x5E55;
+  </div>
+  <script type="text/javascript" src="javascript/VUI.js"></script>
 <script type='text/javascript'>
   room.init();
   room.join();
