@@ -87,15 +87,15 @@ var UI = {
   }
 };
 
-var viewPortScale = 'initial-scale=1.0, maximum-scale=1.0, user-scalable=no';
-var $viewPortMeta = $('#view-port-meta');
-var ratio = window.innerHeight / window.innerWidth;
-  setInterval(function() {
-  if (window.innerHeight > window.innerWidth) {
-    $viewPortMeta.attr('content', 'width=device-width, height=auto, '
-      + viewPortScale);
-  } else {
-    $viewPortMeta.attr('content', 'width=device-height, height=device-height, '
-      + viewPortScale);
-  }
-}, 500);
+//var viewPortScale = 'initial-scale=1.0, maximum-scale=1.0, user-scalable=no';
+//var $viewPortMeta = $('#view-port-meta');
+//var ratio = window.innerHeight / window.innerWidth;
+//  setInterval(function() {
+//  if (window.innerHeight > window.innerWidth) {
+//    $viewPortMeta.attr('content', 'width=device-width, height=auto, '
+//      + viewPortScale);
+//  } else {
+//    $viewPortMeta.attr('content', 'width=device-height, height=device-height, '
+//      + viewPortScale);
+//  }
+//}, 500);
