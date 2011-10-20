@@ -1,0 +1,76 @@
+<!doctype html>
+<html>
+<head>
+  <title>Bowling Client</title>
+  <meta charset="utf-8">
+   <meta id="view-port-meta" name="viewport" content="width=device-width, height=auto, initial-scale=1.0,user-scalable=no">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Cache-Control" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  <link rel="stylesheet" href="css/client.css">
+</head>
+<body onload="init()" onunload="room.close()">
+<div style="position:absolute; top: 10px; height: 10px;">
+<!--  <input type="button" value="请击球" onclick="room.send()"/>-->
+</div>
+
+<div id="main-wrapper">
+  <div id="login">
+    <form id="login-form">
+      <input type="text" placeholder="&#x8BF7;&#x8F93;&#x5165;&#x73A9;&#x5BB6;&#x540D;&#x79F0;" id="username" maxlength="15">
+      <br>
+      <button id="login-button"></button>
+    </form>
+  </div>
+  <div id="game-mode">
+    <button id="single-player" data-id="1" onclick="room.choicejoinnumber(this)"></button>
+    <button id="two-players" data-id="2" onclick="room.choicejoinnumber(this)"></button>
+    <br>
+    <button id="three-players" data-id="3" onclick="room.choicejoinnumber(this)"></button>
+  </div>
+  <ul id="waiting-others-message">
+    <li>&#x60A8;&#x5DF2;&#x8FDB;&#x5165;&#xFF0C;&#x7B49;&#x5F85;&#x5176;&#x4ED6;&#x73A9;&#x53CB;...</li>
+   <!--   <li>玩友<strong>小明</strong>已进入...</li>
+    <li>玩友<strong>小强</strong>已进入...</li>-->
+  </ul>
+  <div id="start-game-tip-message">
+    <div>请点击按钮开始游戏</div>
+    <button id="start-button" onclick="room.initgame()"></button>
+  </div>
+  <div id="main-message">
+     轮到你扔保龄球了请用手指划过屏幕
+  </div>
+ 
+  <div id="game-result-wrapper">
+    <div id="game-result"></div>
+    <button id="restart-button" onclick="room.initgame()"></button>
+  </div>
+  <div id="main-message">
+  &#x8F6E;&#x5230;&#x4F60;&#x6254;&#x4FDD;&#x9F84;&#x7403;&#x4E86;&#x8BF7;&#x7528;&#x624B;&#x6307;&#x5212;&#x8FC7;&#x5C4F;&#x5E55;
+  </div>
+</div>
+<div id="game-info">
+  玩家：<span id="player-name">那谁谁谁谁谁谁谁</span>
+  <span id="score-info">本局：<span id="current-inning-score">0</span>
+  总分：<span id="total-score">50</span></span>
+</div>
+<div id="ball-wrapper">
+  <div id="ball"></div>
+</div>
+
+<script src= "javascript/jquery.js"></script>
+<script src="javascript/Util.js"></script>
+<script src="javascript/UI.js"></script>
+<script src="javascript/client.js"></script>
+<script type='text/javascript'>
+    $('#login-button').on('click', function(event) {
+    	event.preventDefault();
+    	room.login($F('username'));
+    	return false;
+    });
+</script>
+
+
+
+</body>
+</html>

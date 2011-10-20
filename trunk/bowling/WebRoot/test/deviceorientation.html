@@ -1,0 +1,51 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Device Orientation Support Test</title>
+    <meta charset="utf-8">
+  </head>
+  <body>
+    <div id="info"></div>
+    <div id="info2"></div>
+    <div id="info3"></div>
+     <div id="info4"></div>
+    <script>
+      if (!window.DeviceOrientationEvent) {
+        info('Your browser doesn\'t support device orientation event');
+      } else {
+        window.addEventListener('deviceorientation', function(e) {
+          var output = 'Alpha: ' + parseInt(e.alpha) + '<br>' + 'Beta: ' + parseInt(e.beta) +
+            '<br>Gamma: ' + parseInt(e.gamma) + '<br>absolute: ' + e.absolute;
+          info(output);
+        }, false);
+      }
+      
+      window.addEventListener("devicemotion", function(event) {
+          // Process event.acceleration, event.accelerationIncludingGravity,
+          // event.rotationRate and event.interval
+          var aig = event.accelerationIncludingGravity;
+          var a = event.acceleration;
+          //var rotationRate = event.rotationRate;
+          var output = '<br><br>accelerationIncludingGravity:<br> x  ' + parseInt(aig.x) + '<br>y  ' +
+            parseInt(aig.y) + '<br>z  ' + parseInt(aig.z) + '<br><br>acceleration :<br>x  ' + parseInt(a.x) + '<br>y  ' +
+            parseInt(a.y) + '<br>z  ' + parseInt(a.z) + '<br>interval (in milliseconds): ' + event.interval;
+          document.getElementById('info2').innerHTML = output;
+      }, false);
+      
+      window.addEventListener("compassneedscalibration ", function(event) {
+          alert('Your compass needs calibrating! Wave your device in a figure-eight motion');
+          event.preventDefault();
+      }, true);
+      
+      function info(msg) {
+        document.getElementById('info').innerHTML = msg;
+      }
+      
+      window.ondevicemotion = function(event) {
+      ax = event.accelerationIncludingGravity.x * 1;
+      ay = event.accelerationIncludingGravity.y * 1;
+       document.getElementById('info4').innerHTML = ax+'------'+ay;
+   }
+    </script>
+  </body>
+</html>
