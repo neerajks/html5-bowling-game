@@ -1,0 +1,98 @@
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-size: 14px;
+  font-family: 'Merriweather', "Microsoft YaHei",Segoe UI,Tahoma,Arial,Verdana,sans-serif;
+}
+canvas {
+    display: block;
+}
+
+#scores-wrapper {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  width: 460px;
+  background: transparent url(../images/scoring_background.png) 0 0 no-repeat;
+  background-size: 100% 100%;
+  padding: 12px;
+}
+
+#mytable {
+  border-collapse: collapse;
+  table-layout: fixed;
+  border-spacing: 0;
+  border: 1px solid #ace3f8;
+  width: 450px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+th {
+  border-top: 1px solid transparent;;
+}
+
+tr > td:first-child, tr > th:first-child {
+  border-left: 1px solid transparent;
+  width:70px;
+}
+
+tr > td:last-child, tr > th:last-child {
+  border-right: 1px solid transparent;
+  width: 50px;
+}
+
+tbody > tr:last-child > td {
+  border-bottom: 1px solid transparent;
+}
+
+#waiting-wrapper {
+  color: #3f89ad;
+  height: 100%;
+  display: -webkit-box;
+  -webkit-box-pack: center;
+  -webkit-box-align: center;
+  background-size: cover;
+  position: absolute;
+  top: 0px;
+  left: 300px;
+}
+
+#waiting-zone {
+  width: 589px;
+  height: 256px;
+  padding: 220px 0 0 90px;
+  background: transparent url(../images/waiting_zone_bg.png) 0 0 no-repeat;
+}
+
+#qrCode {
+  float: left;
+  width: 150px;
+  height: 150px;
+  background-position: center;
+  margin-right: 30px;
+}
+
+#game-tip {
+  float: left;
+}
+
+#main-message {
+  display: none;
+  width: 197px;
+  height: 125px;
+  padding: 30px;
+  text-align: left;
+  color: white;
+  background: transparent url(../images/waiting_message_bg.png) 0 0 no-repeat;
+  box-shadow: 0 0 7px #555;
+  font-size: 18px;
+  border-radius: 10px;
+  background-size: cover;
+}

@@ -1,0 +1,27 @@
+# 3ds Max Wavefront OBJ Exporter v0.97b - (c)2007 guruware
+# 创建的文件:25.09.2011 14:47:09
+
+mtllib crab.mtl
+
+#
+# object Plane02
+#
+
+v  -60.0080 29.0175 91.7295
+v  -60.0080 19.1703 91.7295
+v  -49.1422 29.0175 91.7295
+v  -49.1422 19.1703 91.7295
+# 4 vertices
+
+vt 0.0000 1.0000 0.0000
+vt 0.0000 0.0000 0.0000
+vt 1.0000 1.0000 0.0000
+vt 1.0000 0.0000 0.0000
+# 4 texture coords
+
+g Plane02
+usemtl 24___Default
+f 1/1 2/2 3/3 
+f 4/4 3/3 2/2 
+# 2 faces
+

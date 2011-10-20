@@ -1,0 +1,179 @@
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
+  font-size: 20px;
+  font-family: Verdana, Arial, sans-serif;
+  color: white;
+  background: white url(../images/bg5.jpg) 0 0 no-repeat;
+  background-size: cover;
+}
+
+body, button, input, ul, li {
+  padding: 0;
+  margin: 0;
+}
+
+ul, li {
+  list-style: none;
+}
+
+button, input {
+  box-sizing: content-box;
+  border: none;
+  background-color: transparent;
+  box-shadow: 0 0 7px #555;
+  border-radius: 10px;
+  outline: none;
+}
+
+#main-wrapper {
+  height: 100%;
+  display: -webkit-box;
+  -webkit-box-pack: center;
+  -webkit-box-align: center;
+}
+
+#main-wrapper > div {
+  margin: 0 auto;
+  text-align: center;
+}
+
+#login, #game-mode, #waiting-others-message,
+#start-game-tip-message, #main-message, #game-info, #score-info, #game-result-wrapper {
+  display: none;
+}
+
+#username {
+  width: 228px;
+  height: 55px;
+  color: #3f89ad;
+  background-image: url(../images/input_field.png);
+  text-align: center;
+  text-align: center;
+  font-size: 23px;
+  padding: 2px 15px;
+  margin-bottom: 20px;
+}
+
+#login-button {
+  width: 256px;
+  height: 56px;
+  background-image: url(../images/login_button.png);
+}
+
+#game-mode > button {
+  width: 163px;
+  height: 58px;
+  margin: 0 20px 20px 0;
+}
+
+#single-player {
+  background-image: url(../images/single_player.png);
+}
+
+#two-players {
+  background-image: url(../images/two_players.png);
+}
+
+#three-players {
+  background-image: url(../images/three_players.png);
+}
+
+#waiting-others-message, #start-game-tip-message {
+  width: 187px;
+  height: 129px;
+  background-image: url(../images/waiting_message_bg.png);
+  padding: 28px 35px;
+  color: white;
+}
+
+#start-game-tip-message {
+  width: 257px;
+  padding: 28px 0;
+}
+
+ul#waiting-others-message > li {
+  margin-bottom: 10px;
+  text-align: left;
+}
+
+#start-button {
+  width: 219px;
+  height: 55px;
+  margin-top: 35px;
+  background-image: url(../images/start_button.png);
+}
+
+#main-message {
+  width: 204px;
+  height: 159px;
+  color: #3f89ad;
+  text-align: left;
+  padding: 25px 30px 0 30px;
+  background: url(../images/main_message_bg.png), url(../images/touch_tip_bg.png);
+}
+
+#game-result {
+  width: 264px;
+  height: 183px;
+  background: transparent url(../images/win.png) 0 0 no-repeat;
+}
+
+#restart-button {
+  width: 225px;
+  height: 50px;
+  margin-top: 15px;
+  background: white url(../images/restart_button.png) 0 0 no-repeat;
+}
+
+#game-info {
+  position: absolute;
+  width: 100%;
+  padding: 15px 0;
+  bottom: 0;
+  text-align: center;
+  font-size: 17px;
+}
+
+#player-name, #current-inning-score {
+  margin-right: 15px;
+}
+
+#player-name {
+  display: inline-block;
+  max-width: 60px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+#ball-wrapper {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+#ball {
+  display: none;
+  position: relative;
+  margin: 0 auto;
+  width: 80px;
+  height: 80px;
+  background: transparent url(../images/ball.gif) no-repeat;
+  background-size: 100% 100%;
+  opacity: 1;
+  -webkit-transition: width 3s linear 0s, height 3s linear 0s,
+    top 3s linear 0s, opacity 3s linear 0s;
+}
+
+#ball.show {
+  width: 30px;
+  height: 30px;
+  opacity: 0;
+}
