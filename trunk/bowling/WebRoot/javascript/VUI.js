@@ -31,6 +31,16 @@ var VUI = {
   showPlayer3: function(message){
 	  $('player3').innerHTML=message;
   },
+  
+  showWaitingMessage: function(message) {
+    $('wait_user').innerHTML = message;
+  },
+  
+  hideWaitingMessage: function() {
+    $('wait_user').style.display='none';
+  },
+
+  
   refresh: function(){
 	  
 	  VUI.hidePlayer1();

@@ -32,10 +32,53 @@ var room = {
 
         if (this._ws) this._ws.send(message);
     },
+	/*    
+	  NO_ONE_JOIN(0),
+      WAITING_FOR_PLAYERS(1),
+      WAITING_FOR_MOBILE(2),
+      THROWING_BALL(3);*/
     _onmessage: function(m) {
+	
         if ('connect' != m.data) {
             var result = JSON.parse(m.data);
-            if (result.g != undefined) {
+			
+			if (result.status == 1) {
+			  var username = result.username;
+			  var numbercount = result.numbercount;
+			  var joinnumber = result.joinnumber;
+			  room.order = joinnumber;
+			  var lacknumber = numbercount - joinnumber;
+			  VUI.showWaitingMessage(username + "参与了" + numbercount +"人游戏，还缺" + lacknumber + "人");
+			  room.setThInfors(result.scorearray.length, 'th_infors');
+			  room.setscore(username, result.scorearray, result.totalscore, 'tr' + joinnumber);
+			} else if (result.status == 2) {
+			  VUI.hideWaitWrapper();
+			  var joinnumber = result.joinnumber;
+			  room.order = joinnumber;
+			  room.setThInfors(result.scorearray.length, 'th_infors');
+			  var username = result.username;
+			  room.setscore(username, result.scorearray, result.totalscore, 'tr' + joinnumber);
+			  
+			  var currrentusername = result.currrentusername;
+			  VUI.showMainMessage(currrentusername + "正在扔球，其他玩家请等候..."); 
+			} else if (result.status == 3) {
+			  VUI.hideMainMessage();
+			  var ax = result.ax;
+			  var ay = result.ay;
+			  room.order = result.order;
+			  room.current_frame = result.currentframe;
+			  Bowling.KickOneFrame(ax, ay, function(score) {
+			    var jsonBody = {};
+				jsonBody["order"] = room.order;
+				jsonBody["score"] = score;
+				var current_frame = room.current_frame;
+				
+                var encoded_check = JSON.stringify(jsonBody);
+				room.setScoreByFrameAndOrder(room.order, score, current_frame);
+			    room._send(encoded_check);
+			  });
+			}
+            /*if (result.g != undefined) {
                 var score = room._returnscore(result.g, result.sendor);
                 jsonresult = '{"username":"' + result.username + '","' + 'score":"' + room._returnscore(result) + '"}';
                 room._send(jsonresult);
@@ -51,9 +94,8 @@ var room = {
                 return;
             }
             if (result.message && result.message == 'end') {
-                /*VUI.showMainMessage(m.flag);
-            	 window.setTimeout(VUI.hideMainMessage(),1000);*/
-
+                //VUI.showMainMessage(m.flag);
+            	// window.setTimeout(VUI.hideMainMessage(),1000);
                 VUI.hideMainMessage();
                 VUI.hidePlayer1();
                 VUI.hidePlayer2();
@@ -84,7 +126,7 @@ var room = {
             if (result.username != undefined && result.order == '3') {
                 VUI.showPlayer3('玩家：' + result.username + '已登录');
                 room.setscore(result.username, result.scorearray, result.score, result.total, 'tr3');
-            }
+            }*/
         }
     },
     setThInfors:function(total,id){
@@ -100,8 +142,16 @@ var room = {
             z.innerHTML = '玩家';
     	}
     },
-    setscore: function(username, Arraylist, count, total, id) {
-        if (Arraylist != undefined) {
+	
+	setScoreByFrameAndOrder : function(order, score, current_frame) {
+	  var scores = $('scores');
+	  console.log("room.order:" + order);
+	  console.log("score:" + score);
+	  console.log("current_frame:" + current_frame);
+	},
+	
+    setscore: function(username, scoreArray, totalScore, id) {
+        if (scoreArray != undefined) {
             if ($(id) == undefined) {
                 var tr = document.createElement('tr');
                 tr.id = id;
@@ -110,11 +160,10 @@ var room = {
             }
             room.deleteTd(id);
             var x = $(id).insertCell(0);
-            x.innerHTML = count;
-            for (var i = Arraylist.length - 1; i >= 0; --i) {
+            x.innerHTML = totalScore;
+            for (var i = scoreArray.length - 1; i >= 0; --i) {
                 var y = $(id).insertCell(0);
-                y.innerHTML = Arraylist[i];
-
+                y.innerHTML = scoreArray[i];
             }
             var z = $(id).insertCell(0);
             z.innerHTML = username;

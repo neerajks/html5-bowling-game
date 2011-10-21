@@ -60,4 +60,15 @@
     <servlet-name>choicenumber</servlet-name>
     <url-pattern>/choicenumber/*</url-pattern>
   </servlet-mapping>
+  
+    <servlet>
+    <servlet-name>chooseplayersnumber</servlet-name>
+    <servlet-class>com.bowling.login.ChoosePlayersNumber</servlet-class>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>chooseplayersnumber</servlet-name>
+    <url-pattern>/chooseplayersnumber/*</url-pattern>
+  </servlet-mapping>
 </web-app>

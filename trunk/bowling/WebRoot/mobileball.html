@@ -33,10 +33,6 @@
    <!--   <li>玩友<strong>小明</strong>已进入...</li>
     <li>玩友<strong>小强</strong>已进入...</li>-->
   </ul>
-  <div id="start-game-tip-message">
-    <div>请点击按钮开始游戏</div>
-    <button id="start-button" onclick="room.initgame()"></button>
-  </div>
   <div id="main-message">
      轮到你扔保龄球了请用手指划过屏幕
   </div>
@@ -63,9 +59,10 @@
 <script src="javascript/UI.js"></script>
 <script src="javascript/client.js"></script>
 <script type='text/javascript'>
+    UI.showLoginForm(); 
     $('#login-button').on('click', function(event) {
     	event.preventDefault();
-    	room.login($F('username'));
+    	room.login();
     	return false;
     });
 </script>

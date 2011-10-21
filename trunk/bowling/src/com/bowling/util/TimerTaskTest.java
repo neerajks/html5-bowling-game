@@ -54,9 +54,9 @@ public class TimerTaskTest extends TimerTask{
 				
 				//one player
 				if(Constant.NUMBERCOUNT==1){
-					Constant.user1.total++;
-					if(Constant.user1.total<=10)
-						Constant.user1.scorearray[Constant.user1.total-1]=0;
+					Constant.user1.currentFrame++;
+					if(Constant.user1.currentFrame<=10)
+						Constant.user1.scorearray[Constant.user1.currentFrame-1]=0;
 						Constant.timeOut(null);
 				}
 				
@@ -64,15 +64,15 @@ public class TimerTaskTest extends TimerTask{
 				if(Constant.NUMBERCOUNT==2){
 					if(Constant.user1.status=="1"){
 						Constant.user1.status="0";
-						Constant.user1.total++;
-						Constant.user1.scorearray[Constant.user1.total-1]=0;
+						Constant.user1.currentFrame++;
+						Constant.user1.scorearray[Constant.user1.currentFrame-1]=0;
 						Constant.user2.status="1";
 						Constant.timeOut(null);
 					}else{
 						Constant.user2.status="0";
-						Constant.user2.total++;
-						if(Constant.user2.total==10)
-							Constant.user2.scorearray[Constant.user2.total-1]=0;
+						Constant.user2.currentFrame++;
+						if(Constant.user2.currentFrame==10)
+							Constant.user2.scorearray[Constant.user2.currentFrame-1]=0;
 						Constant.user1.status="1";
 						Constant.timeOut(null);
 					}
@@ -82,21 +82,21 @@ public class TimerTaskTest extends TimerTask{
 				if(Constant.NUMBERCOUNT==3){
 					if(Constant.user1.status=="1"){
 						Constant.user1.status="0";
-						Constant.user1.total++;
-						Constant.user1.scorearray[Constant.user1.total-1]=0;
+						Constant.user1.currentFrame++;
+						Constant.user1.scorearray[Constant.user1.currentFrame-1]=0;
 						Constant.user2.status="1";
 						Constant.timeOut(null);
 					}else if(Constant.user2.status=="1"){
 						Constant.user2.status="0";
-						Constant.user2.total++;
-						Constant.user2.scorearray[Constant.user2.total-1]=0;
+						Constant.user2.currentFrame++;
+						Constant.user2.scorearray[Constant.user2.currentFrame-1]=0;
 						Constant.user3.status="1";
 						Constant.timeOut(null);
 					}else{
 						Constant.user3.status="0";
-						Constant.user3.total++;
-						if(Constant.user3.total==10)
-							Constant.user3.scorearray[Constant.user3.total-1]=0;
+						Constant.user3.currentFrame++;
+						if(Constant.user3.currentFrame==10)
+							Constant.user3.scorearray[Constant.user3.currentFrame-1]=0;
 						Constant.user1.status="1";
 						Constant.timeOut(null);
 					}
