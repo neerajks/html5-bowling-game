@@ -54,33 +54,49 @@ tbody > tr:last-child > td {
 
 #waiting-wrapper {
   color: #3f89ad;
-  height: 100%;
+  width:100%;
+  height:100%;
   display: -webkit-box;
   -webkit-box-pack: center;
   -webkit-box-align: center;
   background-size: cover;
-  position: absolute;
-  top: 0px;
-  left: 300px;
+  position:absolute;
+  top:0px;
+  left:0px;
 }
 
 #waiting-zone {
-  width: 589px;
-  height: 256px;
-  padding: 220px 0 0 90px;
+  width: 679px;
+  height: 326px;
+  padding: 150px 0 0 0px;
   background: transparent url(../images/waiting_zone_bg.png) 0 0 no-repeat;
 }
 
+#wait_user{
+  text-align:center;
+  font-size:22px;
+}
+
 #qrCode {
-  float: left;
   width: 150px;
   height: 150px;
   background-position: center;
-  margin-right: 30px;
+  margin-right: 150px;
+  float:right;
+}
+
+#access{
+  clear:both;
+  text-align:center;
+  padding-top:20px;
 }
 
 #game-tip {
-  float: left;
+  width:150px;
+  height:150px;
+  float:left;
+  margin-left:150px;
+  font-size:16px;
 }
 
 #main-message {

@@ -17,7 +17,7 @@ var room = {
     join: function() {
 
         var urls = document.location.toString().replace('http://', 'ws://').replace('https://', 'wss://');
-        var location = urls.substring(0, urls.indexOf("bowlingsvn")) + "bowlingsvn/bajax/";
+        var location = urls.substring(0, urls.indexOf("bowling")) + "bowling/bajax/";
         this._ws = new WebSocket(location, "bajax");
         this._ws.onopen = this._onopen;
         this._ws.onmessage = this._onmessage;
@@ -138,7 +138,7 @@ var room = {
     },
     init: function() {
         var qrCode = document.getElementById('qrCode');
-        var url = 'http://' + location.host + '/bowlingsvn/mobileball.html';
+        var url = 'http://' + location.host + '/bowling/mobileball.html';
         $('client-url').innerHTML = url;
         $('client-url').setAttribute('href', url);
         var width = 180;
