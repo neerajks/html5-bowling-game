@@ -39,11 +39,13 @@ public class SettinggameServlet extends HttpServlet{
 					 Constant.Connection.sendMessage(messagejson.toString());
 					 Constant.initConst();
 				 }
-			 }else{	 
-				 flag=a.getString("choicenumber");
+			 }else{
+				 if(!a.isNull("choicenumber"))
+					 flag=a.getString("choicenumber");
 				 if(flag.equals("1") || flag.equals("2") || flag.equals("3")){
 					 Constant.NUMBERCOUNT=Integer.parseInt(flag);
 					 Constant.iscreate=true;
+					 Constant.timeOut(null);
 				 }else{
 					 initgame();
 					 byte[] bytes = a.toString().getBytes("utf-8");
@@ -66,10 +68,42 @@ public class SettinggameServlet extends HttpServlet{
 		Constant.ISRESTART=true;
 		
 	}
-	
-	public void updateUserStatus(JSONObject json){
-//		if(json.isNull("username") && Constant.NUMBERCOUNT==0){
-//			Constant.user1=null;	
-//		}else if(json.isNull("username") && Constant.)
-	}
+	/*
+	public void updateUserStatus(JSONObject json) throws JSONException{
+		if(!json.isNull("username") && Constant.NUMBERCOUNT==0){
+			Constant.initConst();
+			
+		}else if(!json.isNull("username") && Constant.NUMBERCOUNT>0){
+			if(Constant.NUMBERCOUNT==1){
+				Constant.initConst();
+			}else if(!json.isNull("username") && Constant.NUMBERCOUNT==2){
+				Constant.JOINNUMBER=1;
+				Constant.NUMBERCOUNT=1;
+				if((json.getString("username")).equals(Constant.user1.username)){
+					Constant.user1=null;
+					Constant.user2.setStatus("1");
+				}else if((json.getString("username")).equals(Constant.user2.username)){
+					Constant.user2=null;
+					Constant.user1.setStatus("1");
+				}
+			}else if(!json.isNull("username") && Constant.NUMBERCOUNT==3){
+				Constant.NUMBERCOUNT=2;
+				Constant.JOINNUMBER=2;
+				if(Constant.user1.getUsername().equals(json.getString("username"))){
+					Constant.user1=null;
+					Constant.user2.setStatus("1");
+					Constant.user2.setOrder("1");
+					Constant.user3.setOrder("2");
+				}else if(Constant.user2.getUsername().equals(json.getString("username"))){
+					Constant.user2=null;
+					Constant.user3.setStatus("1");
+					Constant.user3.setOrder("2");
+				}else if(Constant.user3.getUsername().equals(json.getString("username"))){
+					Constant.user3=null;
+					Constant.user1.setStatus("1");
+				}
+			}
+			
+		}
+	}*/
 }
