@@ -17,7 +17,7 @@ var room = {
     join: function() {
 
         var urls = document.location.toString().replace('http://', 'ws://').replace('https://', 'wss://');
-        var location = urls.substring(0, urls.indexOf("bowling")) + "bowling/bajax/";
+        var location = urls.substring(0, urls.indexOf("bowlingsvn")) + "bowlingsvn/bajax/";
         this._ws = new WebSocket(location, "bajax");
         this._ws.onopen = this._onopen;
         this._ws.onmessage = this._onmessage;
@@ -39,6 +39,10 @@ var room = {
                 var score = room._returnscore(result.g, result.sendor);
                 jsonresult = '{"username":"' + result.username + '","' + 'score":"' + room._returnscore(result) + '"}';
                 room._send(jsonresult);
+            }
+            if(result.message && result.message=='close'){
+            	VUI.showMainMessage('玩家：'+result.username+',已经退出！');
+            	window.setTimeout(VUI.refresh, 10000);
             }
             if (result.message && result.message.length > 7) {
                 VUI.hideWaitWrapper();
@@ -134,7 +138,7 @@ var room = {
     },
     init: function() {
         var qrCode = document.getElementById('qrCode');
-        var url = 'http://' + location.host + '/bowling/mobileball.html';
+        var url = 'http://' + location.host + '/bowlingsvn/mobileball.html';
         $('client-url').innerHTML = url;
         $('client-url').setAttribute('href', url);
         var width = 180;
