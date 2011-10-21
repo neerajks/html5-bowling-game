@@ -32,17 +32,17 @@ public  class Util {
 		String name2="";
 		String name3="";
 		int temp = 0;
-		if(Constant.user1!=null && Constant.user1.score>=0){
+		if(Constant.user1!=null && Constant.user1.totalScore>=0){
 			name1=Constant.user1.getUsername();
-			num1=Constant.user1.score;
+			num1=Constant.user1.totalScore;
 		}
-		if(Constant.user2!=null && Constant.user2.score>=0){
+		if(Constant.user2!=null && Constant.user2.totalScore>=0){
 			name2=Constant.user2.getUsername();
-			num2=Constant.user2.score;
+			num2=Constant.user2.totalScore;
 		}
-		if(Constant.user3!=null && Constant.user3.score>=0){
+		if(Constant.user3!=null && Constant.user3.totalScore>=0){
 			name3=Constant.user3.getUsername();
-			num3=Constant.user3.score;
+			num3=Constant.user3.totalScore;
 		}
 		if(num1==num2 && num2==num3){
 			return "祝贺玩家："+name1+","+name2+","+name3+" 并列第一。";

@@ -1,3 +1,4 @@
+
 function $F() {
     return document.getElementById(arguments[0]).value;
 }
@@ -15,21 +16,62 @@ function xhr(method, uri, body, handler) {
 }
 
 var room = {
-    login: function(name) {
-        room.username = name;
+    login: function() {
+        room.username = $F('username');
         var jsonpoll = {};
         jsonpoll["username"] = room.username;
-        jsonpoll["login_id"] = room.login_id;
+        /*jsonpoll["login_id"] = room.login_id;
         jsonpoll["status"] = room.status;
         jsonpoll["order"] = room.ay;
         jsonpoll["sendor"] = room.ax;
         jsonpoll["g"] = room.order;
-        jsonpoll["choicenumber"] = room.id;
-        if(room.checkrepartname())
-        	return;
-        var encoded_check = JSON.stringify(jsonpoll);
-        xhr('POST', 'bajax/login', encoded_check, room.poll);
+        jsonpoll["choicenumber"] = room.id;*/
+        if(room.isUserNameNull() == false) {
+          var encoded_check = JSON.stringify(jsonpoll);
+          xhr('POST', 'bajax/login', encoded_check, room.loginCallback);
+		}
     },
+	
+	loginCallback : function(m) {
+	  /*
+	 BECOME_MASTER(0),
+    WAITING_FOR_MASTER(1),
+    JOINED_GAME(2),
+    Full_GAME(3),
+    WAITING_FOR_OTHERS(4),
+    WAITING_THROWING(5),
+    THROWING_BALL(6),
+    WAITING_FOR_SCORE(7),
+    NA_STATE(8);
+	  */
+	  if (m.status == "0") { 
+	    UI.hideLoginForm();
+        UI.showGameMode();
+	  } else if (m.status == "1") {
+     	UI.hideLoginForm(); 
+		UI.showMainMessage('游戏正在创建，稍后登陆！');
+		setTimeout(room.login, 500);
+	  } else if (m.status == "2") {
+	    UI.hideMainMessage();
+	    UI.hideGameMode();
+		UI.hideLoginForm();
+		UI.showWaitingOthersMessage();
+        room.order = m.order;
+        room.score = m.score;
+		// n frame
+		room.total = m.total;
+		room.status = "4";
+		room.isThrowingBall = m.isThrowingBall;		
+		setTimeout(room.checkuserstatus, 500);
+	  } else if (m.status == "3") {
+		UI.hideLoginForm();
+		UI.showMainMessage('游戏人数已满，请等候下一局！');
+	  } else if (m.status == "8") {
+	    UI.hideLoginForm();
+	    UI.showMainMessage('服务器未连接，请重新刷新页面！');
+	  }
+	},
+	
     poll: function(m) {
     	if(room.username != undefined && m.joinnumber == 0 && m.numbercount == 0){
     		UI.hideGameMode();
@@ -146,61 +188,121 @@ var room = {
             return;
         }
     },
-    checkuserstatus: function() {
-
-        var jsonpoll = {};
-        //jsonpoll["action"] = "poll";
-        jsonpoll["username"] = room.username;
-        jsonpoll["login_id"] = room.login_id;
-        jsonpoll["status"] = room.status;
-        jsonpoll["order"] = room.ay;
-        jsonpoll["choicenumber"] = room.id;
-        var encoded_check = JSON.stringify(jsonpoll);
-//        if(!navigator.onLine){
-//        	UI.showMainMessage('您已经处于离线状态，请检查您的网络设置');
-//        }
-        if (room.flag) {
-            jsonpoll["completed"] = true;
-            encoded_check = JSON.stringify(jsonpoll);
-            xhr('POST', 'bajax/choicenumber', encoded_check, null);
-            return;
-        }
-        xhr('POST', 'bajax/check', encoded_check, room.poll);
-        setTimeout(room.checkuserstatus, 500);
+    checkuserstatus: function(result) {
+	  /*WAITING_FOR_OTHERS(4),
+      WAITING_THROWING(5),
+      THROWING_BALL(6);*/
+	  if (result) {
+	    room.status = result.status;
+		if (result.order) {
+		  room.order = result.order;
+		}
+	  }
+	  
+	  var jsonpoll = {};
+	  if (room.status == "4") {
+        jsonpoll["status"] = "4";
+        jsonpoll["order"] = room.order;    
+	    UI.hideGameMode();
+		UI.showWaitingOthersMessage();
+	  } else if (room.status == "5") {
+	    UI.hideWaitingOthersMessage();
+		UI.hideGameMode();
+		UI.showMainMessage("其他玩家正在抛球，请您等候");
+        jsonpoll["status"] = "5";
+        jsonpoll["order"] = room.order;    		
+	  } else if (room.status == "6") {
+	    UI.hideGameMode();
+	    UI.hideWaitingOthersMessage();
+		UI.showMainMessage(room.notice);
+	    return;
+	  } else if (room.status == "8") {
+	    UI.hideGameMode();
+	    UI.hideWaitingOthersMessage();
+		UI.showMainMessage('服务器未连接，请重新刷新页面！');
+		return;
+	  }
+	  var encoded_check = JSON.stringify(jsonpoll);
+	  xhr('POST', 'bajax/check', encoded_check, function(result) {
+	      if (result) {
+	        room.status = result.status;
+     	  }
+	      setTimeout(room.checkuserstatus, 500);
+	     });
+      //setTimeout(room.checkuserstatus, 500);
     },
-    send: function() {
-        var jsonpoll = {};
-        jsonpoll["username"] = room.username;
-        jsonpoll["login_id"] = room.login_id;
-        jsonpoll["status"] = room.status;
-        jsonpoll["order"] = room.ay;
-        jsonpoll["sendor"] = room.ax;
-        jsonpoll["g"] = room.order;
-        jsonpoll["choicenumber"] = room.id;
-        var encoded_check = JSON.stringify(jsonpoll);
-        xhr('POST', 'bajax/poll', encoded_check, room.poll);
+	
+	send: function() {
+	  console.log("enter send");
+      var jsonpoll = {};
+      jsonpoll["order"] = room.order;
+	  jsonpoll["status"] = "6";
+      jsonpoll["ax"] = room.ay;
+      jsonpoll["ay"] = room.ax;
+      var encoded_check = JSON.stringify(jsonpoll);
+      xhr('POST', 'bajax/poll', encoded_check, room.waitForScore);
     },
+	
+	waitForScore: function(result) {
+	  /*
+	     BECOME_MASTER(0),
+    WAITING_FOR_MASTER(1),
+    JOINED_GAME(2),
+    Full_GAME(3),
+    WAITING_FOR_OTHERS(4),
+    WAITING_THROWING(5),
+    THROWING_BALL(6),
+    WAITING_FOR_SCORE(7),
+	NA_STATE(8);*/
+	  if (result && result.status) {
+	    room.status = result.status;
+	  }
+	  console.log(room.status);
+	  if (room.status == "7") {
+		throwBall();
+        var jsonpoll = {};
+        jsonpoll["order"] = room.order;
+	    jsonpoll["status"] = "7";
+        var encoded_check = JSON.stringify(jsonpoll);
+		setTimeout( function() {
+          xhr('POST', 'bajax/poll', encoded_check, room.waitForScore);
+		}, 500);
+	  } else if (room.status == "5") {
+	    $('#current-inning-score').html(result.currentframe);
+        $('#total-score').html(result.totalscore);
+        UI.showScoreInfo();
+        UI.showGameInfo(room.username);
+	    setTimeout(room.checkuserstatus, 500);
+	  } else if (room.status == "8") { 
+	    UI.hideSocreInfo();
+		UI.hideMainMessage();
+		UI.showMainMessage('服务器未连接，请重新刷新页面！');
+	  }
+	},
+	
     choicejoinnumber: function(e) {
         var choicenumber = {};
         choicenumber["username"] = room.username;
-        choicenumber["login_id"] = room.login_id;
+        /*choicenumber["login_id"] = room.login_id;
         choicenumber["status"] = room.status;
-        choicenumber["order"] = room.order;
+        choicenumber["order"] = room.order;*/
         choicenumber["choicenumber"] = e.getAttribute('data-id');
         encoded_check = JSON.stringify(choicenumber);
-        xhr('POST', 'bajax/choicenumber', encoded_check, room.poll);
+        xhr('POST', 'bajax/chooseplayersnumber', encoded_check, room.checkuserstatus);
     },
     initgame: function() {
         UI.hideGameResult();
         room.complete;
         document.location.href = document.location.toString();
     },
-    checkrepartname:function(){
+	
+    isUserNameNull:function(){
     	var username=$('#username').val();
     	if(username==null || username.length==0){
-    		UI.showMainMessage('用户名不能为空！');
-    		window.setTimeout(UI.hideMainMessage(), 2000);
-    		return true;
+    	  $("#username").attr("placeholder" ,"名字不能为空");
+		  //$("#username").css("color", "red");
+    		//window.setTimeout(UI.hideMainMessage(), 2000);
+    	  return true;
     	}else{
     		return false;
     	}
@@ -208,7 +310,7 @@ var room = {
 }
 
 function init() {
-    room.checkuserstatus();
+    //room.checkuserstatus();
     registerThrowEvent();
     if(room.username!=undefined){
     	room.close();
@@ -226,28 +328,28 @@ function registerThrowEvent() {
         
         window.addEventListener('deviceorientation',
         function(e) {
-            if (room.throwFlag) {
-                var beta = e.beta;
-                //room.notice = '请晃动您的平板！';
-                if (beta < minangle) {
-                    minangle = beta;
-                    starttime = new Date().getTime();
-                }
-                if (beta > maxangle) {
-                    maxangle = beta;
-                    endtime = new Date().getTime();
-                }
+			var beta = e.beta;
+			//room.notice = '请晃动您的平板！';
+			if (beta < minangle) {
+				minangle = beta;
+				starttime = new Date().getTime();
+			}
+			
+			if (beta > maxangle) {
+				maxangle = beta;
+				endtime = new Date().getTime();
+			}
 
-                if (maxangle && minangle && maxangle >= 0 && maxangle - minangle > 93 && room.status == '1') {
-                    room.ay = az * (Math.abs(endtime - starttime) / 1000);
-                    room.ax = xangle;
-                    room.throwFlag = false;
-                    room.send();
-                    throwBall();
-                    maxangle = -Infinity;
-                    minangle = Infinity;
-                }
-            }
+			if (maxangle && minangle && maxangle >= 0 && maxangle - minangle > 93) {
+				room.ay = az * (Math.abs(endtime - starttime) / 1000);
+				room.ax = xangle;
+				room.throwFlag = false;
+				room.send();
+				throwBall();
+				maxangle = -Infinity;
+				minangle = Infinity;
+			}
+            
         },
         false);
 
@@ -256,7 +358,6 @@ function registerThrowEvent() {
             var aig = event.accelerationIncludingGravity;
             az = aig.z;
             xangle = Math.atan(aig.x / aig.z);
-
         },
         false);
     } else if (window.TouchEvent) {
@@ -279,28 +380,25 @@ function registerThrowEvent() {
 
         document.addEventListener('touchend',
         function(e) {
-            if (room.throwFlag) {
-                var touches = e.changedTouches.item(0);
-                var endClientX = touches.clientX;
-                var endClientY = touches.clientY;
-                var xMoved = endClientX - startClientX;
-                var yMoved = endClientY - startClientY;
-                if (Math.abs(xMoved) >= MIN_TOUCH_LENGTH || Math.abs(yMoved) >= MIN_TOUCH_LENGTH || Math.sqrt(xMoved * xMoved + yMoved * yMoved) >= MIN_TOUCH_LENGTH) {
-                    var time = new Date().getTime() - startTime;
-                    //room.ay=xMoved/time;
-                    room.ay = yMoved / time;
-                    room.ax = Math.asin(xMoved / yMoved);
-                    //alert(1);
-                    if (room.status != '1') return;
-
-                    room.throwFlag = false;
-                    room.send();
-                    throwBall();
-
-                    startClientX = null;
-                    startClientY = null;
-                }
+           
+            var touches = e.changedTouches.item(0);
+            var endClientX = touches.clientX;
+			var endClientY = touches.clientY;
+			var xMoved = endClientX - startClientX;
+			var yMoved = endClientY - startClientY;
+			if (Math.abs(xMoved) >= MIN_TOUCH_LENGTH || Math.abs(yMoved) >= MIN_TOUCH_LENGTH || Math.sqrt(xMoved * xMoved + yMoved * yMoved) >= MIN_TOUCH_LENGTH) {
+				var time = new Date().getTime() - startTime;
+				//room.ay=xMoved/time;
+				room.ay = yMoved / time;
+				room.ax = Math.asin(xMoved / yMoved);
+				//alert(1);
+				room.throwFlag = false;
+				room.send();
+				throwBall();
+				startClientY = null;
+				startClientX = null;
             }
+            
         },
         false);
     }

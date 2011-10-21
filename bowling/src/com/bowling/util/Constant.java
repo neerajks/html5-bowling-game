@@ -10,8 +10,11 @@ import org.json.JSONObject;
 import com.bowling.login.User;
 
 public class Constant {
+  public static int current_order = 1;
+  public static User[] USERArray = new User[4];
+  
 	public static String MESSAGE1 ="游戏人数已满,请稍后再试！";
-	public static String MESSAGE2="������Դδ�������";
+	public static String MESSAGE2="场景未加载完毕！";
 	public static String MESSAGE3="游戏正在创建！请稍后登陆";
 	public static String MESSAGE4="��Ϸ���������Ժ�����";
 	public static String MESSAGE5="用户名重复，请重新输入！";
@@ -34,10 +37,12 @@ public class Constant {
 	public static int ROUNDS=10;
 	public static int NUMBERCOUNT=0;
 	public static int JOINNUMBER=0;
-	public static boolean iscomplete=true;
+	public static boolean isThrowingBall = true;
 	public static User user1;
 	public static User user2;
 	public static User user3;
+	
+	
 	
 	public static void setUser(User u){
 		if(user1==null){
@@ -68,7 +73,7 @@ public class Constant {
 		 ISEND=false;
 		 NUMBERCOUNT=0;
 		 JOINNUMBER=0;
-		 iscomplete=true;
+		 isThrowingBall=true;
 		 sendflag=false;
 		 ISRESTART=false;
 		 jsonpoll=null;
