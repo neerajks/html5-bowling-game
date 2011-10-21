@@ -223,24 +223,34 @@ var room = {
 		return;
 	  }
 	  var encoded_check = JSON.stringify(jsonpoll);
-	  xhr('POST', 'bajax/check', encoded_check, function(result) {
-	      if (result) {
-	        room.status = result.status;
-     	  }
-	      setTimeout(room.checkuserstatus, 500);
-	     });
-      //setTimeout(room.checkuserstatus, 500);
+	  if (encoded_check != "{}") {
+		  
+		  xhr('POST', 'bajax/check', encoded_check, function(result) {
+			  if (result) {
+				room.status = result.status;
+			  }
+			  setTimeout(room.checkuserstatus, 500);
+			 });
+	  }
+		  //setTimeout(room.checkuserstatus, 500);
     },
 	
 	send: function() {
-	  console.log("enter send");
-      var jsonpoll = {};
-      jsonpoll["order"] = room.order;
-	  jsonpoll["status"] = "6";
-      jsonpoll["ax"] = room.ay;
-      jsonpoll["ay"] = room.ax;
-      var encoded_check = JSON.stringify(jsonpoll);
-      xhr('POST', 'bajax/poll', encoded_check, room.waitForScore);
+	  if (!room.isSending) 
+	    room.isSending = false;
+	  
+	  if (room.status == 6) {
+		  if (room.isSending == false) {
+			room.isSending = true;
+			var jsonpoll = {};
+			jsonpoll["order"] = room.order;
+			jsonpoll["status"] = "6";
+			jsonpoll["ax"] = room.ay;
+			jsonpoll["ay"] = room.ax;
+			var encoded_check = JSON.stringify(jsonpoll);
+			xhr('POST', 'bajax/poll', encoded_check, room.waitForScore);
+		  }
+	  }
     },
 	
 	waitForScore: function(result) {
@@ -268,10 +278,13 @@ var room = {
           xhr('POST', 'bajax/poll', encoded_check, room.waitForScore);
 		}, 500);
 	  } else if (room.status == "5") {
+	    console.log(result.currentframe);
+		console.log(result.totalscore);
 	    $('#current-inning-score').html(result.currentframe);
         $('#total-score').html(result.totalscore);
         UI.showScoreInfo();
         UI.showGameInfo(room.username);
+		room.isSending = false;
 	    setTimeout(room.checkuserstatus, 500);
 	  } else if (room.status == "8") { 
 	    UI.hideSocreInfo();

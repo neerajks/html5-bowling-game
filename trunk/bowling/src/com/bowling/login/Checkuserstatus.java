@@ -46,6 +46,9 @@ public class Checkuserstatus extends HttpServlet {
       loginJsonObject = new JSONObject(loginjson);
       JSONObject responsejson = new JSONObject();
       // setUserStatus();
+      if (loginJsonObject.isNull("status")) {
+        System.out.println(loginjson);
+      }
       String status = loginJsonObject.getString("status");
       String WAITING_FOR_OTHERS = String.valueOf(UserState.WAITING_FOR_OTHERS.getState());
       String WAITING_THROWING = String.valueOf(UserState.WAITING_THROWING.getState());
