@@ -66,6 +66,8 @@ public class LoginServlet extends HttpServlet{
 				  user.setScorearray(new int[]{0,0,0,0,0,0,0,0,0,0});
 				  Constant.setUser(user);
 				  Constant.JOINNUMBER++;
+				  Constant.timeOut(user);
+				  
 			 }
 		 
 		 response.setContentType("text/json;charset=utf-8");
@@ -80,6 +82,8 @@ public class LoginServlet extends HttpServlet{
 			 polluser.put("iscomplete", Constant.iscomplete);
 			 polluser.put("iscreate", Constant.iscreate);
 			 polluser.put("total", user.total);
+			 polluser.put("joinnumber", Constant.JOINNUMBER);
+			 polluser.put("numbercount", Constant.NUMBERCOUNT);
 			 Constant.Connection.sendMessage(polluser.toString());
 		 }
 	 	 byte[] bytes = polluser.toString().getBytes("utf-8");
