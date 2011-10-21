@@ -29,7 +29,7 @@ public class Checkuserstatus extends HttpServlet{
 			 a= new JSONObject(loginjson);
 			 setUserStatus();
 			 if(!a.isNull("username"))
-				 user=synchronoususer(a.getString("username"));
+				 user=Constant.synchronoususer(a.getString("username"));
 			 response.setContentType("text/json;charset=utf-8");
 			 JSONObject responsejson = new JSONObject();
 			 
@@ -73,24 +73,7 @@ public class Checkuserstatus extends HttpServlet{
 		}
 	}
 	
-	public User synchronoususer(String username){
-		if(Constant.user1!=null && username.equals(Constant.user1.username)){
-			if("1".equals(Constant.user1.getStatus()))
-				Constant.pollusername=Constant.user1.username;
-			return Constant.user1;
-		}
-		if(Constant.user2!=null && username.equals(Constant.user2.username)){
-			if("1".equals(Constant.user2.getStatus()))
-				Constant.pollusername=Constant.user2.username;
-			return Constant.user2;
-		}
-		if(Constant.user3!=null && username.equals(Constant.user3.username)){
-			if("1".equals(Constant.user3.getStatus()))
-				Constant.pollusername=Constant.user3.username;
-			return Constant.user3;
-		}
-		return null;
-	}
+	
 	
 	public  void gameEnd(){
 		
