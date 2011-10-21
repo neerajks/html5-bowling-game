@@ -67,14 +67,16 @@ var room = {
 			  var ay = result.ay;
 			  room.order = result.order;
 			  room.current_frame = result.currentframe;
+			  room.current_username = result.currentusername;
 			  Bowling.KickOneFrame(ax, ay, function(score) {
 			    var jsonBody = {};
 				jsonBody["order"] = room.order;
 				jsonBody["score"] = score;
 				var current_frame = room.current_frame;
-				
+				var current_username = room.current_username;
                 var encoded_check = JSON.stringify(jsonBody);
 				room.setScoreByFrameAndOrder(room.order, score, current_frame);
+				VUI.showMainMessage(current_username + "正在扔球，其他玩家请等候..."); 
 			    room._send(encoded_check);
 			  });
 			}

@@ -40,26 +40,28 @@ public class PollServlet extends HttpServlet {
         String status = pollJsonObject.getString("status");
         int order = Integer.parseInt(pollJsonObject.getString("order"));
         User user = Constant.USERArray[order];
-        if (status.compareTo(THROWING_BALL) == 0) {
-          String ax = pollJsonObject.getString("ax");
-          String ay = pollJsonObject.getString("ay");
+        if (user != null) {
+          if (status.compareTo(THROWING_BALL) == 0) {
+            String ax = pollJsonObject.getString("ax");
+            String ay = pollJsonObject.getString("ay");
 
-          JSONObject bowlingScene = new JSONObject();
-          bowlingScene.put("ax", ax);
-          bowlingScene.put("ay", ay);
-          bowlingScene.put("order", order);
-          bowlingScene.put("status", BowlingStatus.THROWING_BALL.getState());
-          bowlingScene.put("currentframe", user.getCurrentFrame());
-          Constant.Connection.sendMessage(bowlingScene.toString());
-          polluser.put("status", String.valueOf(UserState.WAITING_FOR_SCORE.getState()));
-        } else if (status.compareTo(WAITING_FOR_SCORE) == 0) {
-          if (user != null) {
+            JSONObject bowlingScene = new JSONObject();
+            bowlingScene.put("ax", ax);
+            bowlingScene.put("ay", ay);
+            bowlingScene.put("order", order);
+            bowlingScene.put("status", BowlingStatus.THROWING_BALL.getState());
+            bowlingScene.put("currentframe", user.getCurrentFrame());
+            bowlingScene.put("currentusername", user.getUsername());
+            Constant.Connection.sendMessage(bowlingScene.toString());
+            polluser.put("status", String.valueOf(UserState.WAITING_FOR_SCORE.getState()));
+          } else if (status.compareTo(WAITING_FOR_SCORE) == 0) {
+
             if (user.isGetNewScore()) {
               polluser.put("totalscore", user.getTotalScore());
               polluser.put("currentframe", user.getCurrentFrame());
               polluser.put("status", String.valueOf(UserState.WAITING_THROWING.getState()));
-              Constant.current_order ++;
-              if (Constant.current_order  > Constant.NUMBERCOUNT) {
+              Constant.current_order++;
+              if (Constant.current_order > Constant.NUMBERCOUNT) {
                 Constant.current_order = 1;
               }
               user.setNewScore(false);
@@ -67,14 +69,11 @@ public class PollServlet extends HttpServlet {
               polluser.put("status", String.valueOf(UserState.WAITING_FOR_SCORE.getState()));
             }
           }
-        } else if (status.compareTo(WAITING_THROWING) == 0) {
-          
+        } else {
+          polluser.put("status", String.valueOf(UserState.NA_STATE.getState()));
         }
       } else {
-        System.out.println("poll NA_State");
-        
         polluser.put("status", String.valueOf(UserState.NA_STATE.getState()));
-        System.out.println(polluser);
       }
 
       byte[] bytes = polluser.toString().getBytes("utf-8");
