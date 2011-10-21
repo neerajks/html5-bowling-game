@@ -1,7 +1,10 @@
 package com.bowling.util;
 
+import java.util.Timer;
+
 import org.eclipse.jetty.websocket.WebSocket;
 import org.eclipse.jetty.websocket.WebSocket.Connection;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.bowling.login.User;
@@ -71,5 +74,36 @@ public class Constant {
 		 jsonpoll=null;
 		 pollusername="";
 		 endfrequency=0;
+	}
+	
+	public static TimerTaskTest timetask;
+	public static Timer timer;
+	public static User synchronizedUser;
+	
+	public static void timeOut(User user) throws JSONException{
+		
+		  if(Constant.timetask==null){
+			  Constant.timetask=new TimerTaskTest();
+		  }
+		  Constant.timetask.changeUserStatusByTime(user);	  
+	}
+	
+	public static User synchronoususer(String username){
+		if(Constant.user1!=null && username.equals(Constant.user1.username)){
+			if("1".equals(Constant.user1.getStatus()))
+				Constant.pollusername=Constant.user1.username;
+			return Constant.user1;
+		}
+		if(Constant.user2!=null && username.equals(Constant.user2.username)){
+			if("1".equals(Constant.user2.getStatus()))
+				Constant.pollusername=Constant.user2.username;
+			return Constant.user2;
+		}
+		if(Constant.user3!=null && username.equals(Constant.user3.username)){
+			if("1".equals(Constant.user3.getStatus()))
+				Constant.pollusername=Constant.user3.username;
+			return Constant.user3;
+		}
+		return null;
 	}
 }

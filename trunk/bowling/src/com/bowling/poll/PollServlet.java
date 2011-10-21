@@ -8,6 +8,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.json.JSONObject;
+
+import com.bowling.login.User;
 import com.bowling.util.Constant;
 import com.bowling.util.Util;
 import com.bowling.websocket.ChatWebSocket;
@@ -61,6 +63,8 @@ public class PollServlet extends HttpServlet{
 			 if(!flag)
 				 buf.append(Constant.jsonpoll.getString("status"));
 			 buf.append("\"}");
+			 User user=Constant.synchronoususer(Constant.jsonpoll.getString("username"));
+			 Constant.timeOut(user);
 			 response.setContentType("text/json;charset=utf-8");
 			 byte[] bytes = buf.toString().getBytes("utf-8");
 		     response.setContentLength(bytes.length);

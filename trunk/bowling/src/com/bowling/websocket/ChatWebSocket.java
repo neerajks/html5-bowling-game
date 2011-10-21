@@ -45,10 +45,10 @@ public class ChatWebSocket implements WebSocket.OnTextMessage
     		  if(!data.equals("connect")){
 	    		  a=new  JSONObject(data);
 		    	  if(Constant.user1!=null && a.get("username").equals(Constant.user1.username)){
-		    		  if(Constant.user1.total<=Constant.user1.scorearray.length){
-			    		  Constant.user1.score+=Integer.parseInt((String) a.get("score"));
-			    		  Constant.user1.scorearray[Constant.user1.total]=Integer.parseInt((String) a.get("score"));
-		    		  }
+		    		  Constant.user1.total++;
+		    		  Constant.user1.score+=Integer.parseInt((String) a.get("score"));
+		    		  Constant.user1.scorearray[Constant.user1.total-1]=Integer.parseInt((String) a.get("score"));
+		    		  
 		    		  if(Constant.user2!=null){
 		    			  Constant.user2.status="1";
 		    			  Constant.user1.status="0";
@@ -56,14 +56,13 @@ public class ChatWebSocket implements WebSocket.OnTextMessage
 		    			  Constant.user3.status="1";
 		    			  Constant.user1.status="0";
 		    		  }
-		    		  Constant.user1.total++;
+		    		  
 		    		  Constant.iscomplete=true;
 		    	  }
 		    	  if(Constant.user2!=null && a.get("username").equals(Constant.user2.username)){
-		    		  if(Constant.user2.total<=Constant.user2.scorearray.length){
-			    		  Constant.user2.score+=Integer.parseInt((String) a.get("score"));
-			    		  Constant.user2.scorearray[Constant.user2.total]=Integer.parseInt((String) a.get("score"));
-		    		  }
+		    		  Constant.user2.total++;
+		    		  Constant.user2.score+=Integer.parseInt((String) a.get("score"));
+		    		  Constant.user2.scorearray[Constant.user2.total-1]=Integer.parseInt((String) a.get("score"));
 		    		  if(Constant.user3!=null){
 		    			  Constant.user3.status="1";
 		    			  Constant.user2.status="0";
@@ -71,14 +70,14 @@ public class ChatWebSocket implements WebSocket.OnTextMessage
 		    			  Constant.user1.status="1";
 		    			  Constant.user2.status="0";
 		    		  }
-		    		  Constant.user2.total++;
+		    		  
 		    		  Constant.iscomplete=true;
 		    	  }
 		    	  if(Constant.user3!=null && a.get("username").equals(Constant.user3.username)){
-		    		  if(Constant.user3.total<=Constant.user3.scorearray.length){
-			    		  Constant.user3.score+=Integer.parseInt((String) a.get("score"));
-			    		  Constant.user3.scorearray[Constant.user3.total]=Integer.parseInt((String) a.get("score"));
-		    		  }
+		    		  
+		    		  Constant.user3.score+=Integer.parseInt((String) a.get("score"));
+		    		  Constant.user3.scorearray[Constant.user3.total-1]=Integer.parseInt((String) a.get("score"));
+		    		  Constant.user3.total++;
 		    		  if(Constant.user1!=null){
 		    			  Constant.user1.status="1";
 		    			  Constant.user3.status="0";
@@ -86,7 +85,7 @@ public class ChatWebSocket implements WebSocket.OnTextMessage
 		    			  Constant.user2.status="1";
 		    			  Constant.user3.status="0";
 		    		  }
-		    		  Constant.user3.total++;
+		    		  
 		    		  Constant.iscomplete=true;
 		    	  }
 		    	  send(a);

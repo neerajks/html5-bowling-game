@@ -16,7 +16,7 @@ function xhr(method, uri, body, handler) {
 
 var room = {
     login: function(name) {
-        this.username = name;
+        room.username = name;
         var jsonpoll = {};
         jsonpoll["username"] = room.username;
         jsonpoll["login_id"] = room.login_id;
@@ -25,24 +25,34 @@ var room = {
         jsonpoll["sendor"] = room.ax;
         jsonpoll["g"] = room.order;
         jsonpoll["choicenumber"] = room.id;
+        if(room.checkrepartname())
+        	return;
         var encoded_check = JSON.stringify(jsonpoll);
         xhr('POST', 'bajax/login', encoded_check, room.poll);
     },
     poll: function(m) {
+    	if(room.username != undefined && m.joinnumber == 0 && m.numbercount == 0){
+    		UI.hideGameMode();
+    		UI.hideMainMessage();
+    	}
         if (room.username == undefined && m.joinnumber == 0 && m.numbercount == 0) {
             UI.hideMainMessage();
+            UI.hideWaitingOthersMessage();
             UI.showLoginForm();
-        } else if (room.username == undefined && m.joinnumber != 0 && m.numbercount == 0) {
+        } else if (room.username == undefined && m.joinnumber &&  m.joinnumber!= 0 && m.numbercount == 0) {
+        	console.log(room.username+'--'+m.joinnumber+'--'+m.numbercount);
             UI.hideLoginForm();
             UI.showMainMessage('游戏正在创建，稍后登陆！');
             return;
-        } else if (room.username == undefined && m.joinnumber != 0 && m.numbercount != 0 && m.message.length > 7) {
+        } else if (room.username == undefined && m.joinnumber != 0 && m.numbercount != 0 && m.message && m.message.length > 7) {
             UI.hideLoginForm();
             UI.showMainMessage(m.message);
             return;
         } else if (room.username == undefined && m.joinnumber != 0 && m.numbercount != 0) {
             UI.hideMainMessage();
+            UI.hideWaitingOthersMessage();
             UI.showLoginForm();
+            return;
         }
         if (room.username != undefined && m.numbercount != 0 && m.score != undefined) {
             $('#current-inning-score').html(m.total);
@@ -64,7 +74,7 @@ var room = {
             return;
         }
         if (m.iscreate == 'true') $('#infor').hide();
-        if (m.message == 'null' && !room.flag) {
+        if (m.message == 'null' && !room.flag &&　room.flag!=undefined) {
             UI.hideMainMessage();
             UI.showLoginForm();
             return;
@@ -86,7 +96,12 @@ var room = {
         } else if (m.iscreate == true && m.status == '0' && m.numbercount != 0 && m.numbercount == m.joinnumber) {
             UI.hideLoginForm();
             UI.hideWaitingOthersMessage();
-            UI.showMainMessage('玩家:' + m.pollusername + ',  正在抛球,请稍后！');
+            if(isPad){
+            	UI.showMainMessage('玩家:' + m.pollusername + ',  正在抛球,请稍后！');
+            	$('#main-message').css("background-image","url(popup_backgroud.png)");
+            }else{
+            	UI.showMainMessage('玩家:' + m.pollusername + ',  正在抛球,请稍后！');
+            }
         }
 
         if (m.message && m.message == 'restart') {
@@ -179,12 +194,25 @@ var room = {
         UI.hideGameResult();
         room.complete;
         document.location.href = document.location.toString();
+    },
+    checkrepartname:function(){
+    	var username=$('#username').val();
+    	if(username==null || username.length==0){
+    		UI.showMainMessage('用户名不能为空！');
+    		window.setTimeout(UI.hideMainMessage(), 2000);
+    		return true;
+    	}else{
+    		return false;
+    	}
     }
 }
 
 function init() {
     room.checkuserstatus();
     registerThrowEvent();
+    if(room.username!=undefined){
+    	room.close();
+    }
 }
 
 function registerThrowEvent() {
@@ -195,7 +223,7 @@ function registerThrowEvent() {
         var minangle = Infinity;
         var xangle;
         var az;
-
+        
         window.addEventListener('deviceorientation',
         function(e) {
             if (room.throwFlag) {
