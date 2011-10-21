@@ -16,7 +16,7 @@ public class Constant {
 	public static String MESSAGE4="��Ϸ���������Ժ�����";
 	public static String MESSAGE5="用户名重复，请重新输入！";
 	public static String win="";
-	public static String MESSAGE6="祝贺玩家:"+win+"获胜！";
+	public static String MESSAGE6="祝贺玩家:"+win+"获胜！"; 
 	
 	
 	public static String BEGIN="begin";
