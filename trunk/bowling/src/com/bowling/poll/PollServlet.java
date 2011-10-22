@@ -16,7 +16,6 @@ import com.bowling.login.User;
 import com.bowling.login.User.UserState;
 import com.bowling.util.Constant;
 import com.bowling.util.Util;
-import com.bowling.websocket.ChatWebSocket;
 
 public class PollServlet extends HttpServlet {
 
@@ -35,7 +34,6 @@ public class PollServlet extends HttpServlet {
         JSONObject pollJsonObject = new JSONObject(jsonpoll);
         String THROWING_BALL = String.valueOf(UserState.THROWING_BALL.getState());
         String WAITING_FOR_SCORE = String.valueOf(UserState.WAITING_FOR_SCORE.getState());
-        String WAITING_THROWING = String.valueOf(UserState.WAITING_THROWING.getState());
 
         String status = pollJsonObject.getString("status");
         int order = Integer.parseInt(pollJsonObject.getString("order"));
@@ -55,10 +53,10 @@ public class PollServlet extends HttpServlet {
             Constant.Connection.sendMessage(bowlingScene.toString());
             polluser.put("status", String.valueOf(UserState.WAITING_FOR_SCORE.getState()));
           } else if (status.compareTo(WAITING_FOR_SCORE) == 0) {
-
             if (user.isGetNewScore()) {
               polluser.put("totalscore", user.getTotalScore());
               polluser.put("currentframe", user.getCurrentFrame());
+              polluser.put("rounds", Constant.ROUNDS);
               polluser.put("status", String.valueOf(UserState.WAITING_THROWING.getState()));
               Constant.current_order++;
               if (Constant.current_order > Constant.NUMBERCOUNT) {

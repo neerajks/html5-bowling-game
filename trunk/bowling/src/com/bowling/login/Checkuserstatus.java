@@ -35,7 +35,6 @@ public class Checkuserstatus extends HttpServlet {
   public void doPost(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
 
-    User user = null;
     JSONObject loginJsonObject;
     String message = null;
 
@@ -54,6 +53,8 @@ public class Checkuserstatus extends HttpServlet {
       String WAITING_THROWING = String.valueOf(UserState.WAITING_THROWING.getState());
       String THROWING_BALL = String.valueOf(UserState.THROWING_BALL.getState());
       String NA_STATE = String.valueOf(UserState.NA_STATE.getState());
+      String GAME_END = String.valueOf(UserState.GAME_END.getState());
+      String SHOW_RESULTS = String.valueOf(UserState.SHOW_RESULTS.getState());
 
       int order = loginJsonObject.getInt("order");
       if (Constant.Connection != null) {
@@ -74,6 +75,30 @@ public class Checkuserstatus extends HttpServlet {
           } else {
             responsejson.put("status", THROWING_BALL);
           }
+        }
+      } else if (status.compareTo(GAME_END) == 0) {
+        System.out.println(responsejson);
+        responsejson.put("status", GAME_END);
+        
+        int len = Constant.USERArray.length;
+        String s = SHOW_RESULTS;
+        
+        for (int i = 0; i < len; i++) {
+          User user = Constant.USERArray[i];
+          System.out.println("cf:" + user.currentFrame);
+          System.out.println("r:" + Constant.ROUNDS);
+          if (user == null) {
+            responsejson.put("status", NA_STATE);
+          } else {
+            if (user.currentFrame != Constant.ROUNDS) {
+              s = GAME_END;
+              break;
+            }
+          }
+        }
+        responsejson.put("status", s);
+        if (s == SHOW_RESULTS) {
+          responsejson.put("overallresult", "aasdfadsfasdfdf");
         }
       } else {
         responsejson.put("status", NA_STATE);

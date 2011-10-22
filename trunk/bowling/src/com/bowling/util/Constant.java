@@ -34,7 +34,7 @@ public class Constant {
 	public static boolean START=false;
 	
 	public static int endfrequency=0;
-	public static int ROUNDS=10;
+	public static int ROUNDS=3;
 	public static int NUMBERCOUNT=0;
 	public static int JOINNUMBER=0;
 	public static boolean isThrowingBall = true;

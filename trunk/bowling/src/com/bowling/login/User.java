@@ -12,7 +12,9 @@ public class User {
     WAITING_THROWING(5),
     THROWING_BALL(6),
     WAITING_FOR_SCORE(7),
-    NA_STATE(8);
+    NA_STATE(8),
+    GAME_END(9),
+    SHOW_RESULTS(10);
     
     private int value;
     // Constructor 
