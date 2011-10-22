@@ -191,7 +191,8 @@ var room = {
     checkuserstatus: function(result) {
 	  /*WAITING_FOR_OTHERS(4),
       WAITING_THROWING(5),
-      THROWING_BALL(6);*/
+      THROWING_BALL(6);
+	  GAME_END(9)*/
 	  if (result) {
 	    room.status = result.status;
 		if (result.order) {
@@ -221,6 +222,12 @@ var room = {
 	    UI.hideWaitingOthersMessage();
 		UI.showMainMessage('服务器未连接，请重新刷新页面！');
 		return;
+	  } else if (room.status == "9") {
+	    jsonpoll["status"] = "9";
+		jsonpoll["order"] = room.order;  
+	  } else if (room.status == "10") {
+	    UI.showMainMessage(result.overallresult);
+		return;
 	  }
 	  var encoded_check = JSON.stringify(jsonpoll);
 	  if (encoded_check != "{}") {
@@ -235,6 +242,9 @@ var room = {
 		  //setTimeout(room.checkuserstatus, 500);
     },
 	
+	getOverallResult : function() {
+	  
+	},
 	send: function() {
 	  if (!room.isSending) 
 	    room.isSending = false;
@@ -285,7 +295,15 @@ var room = {
         UI.showScoreInfo();
         UI.showGameInfo(room.username);
 		room.isSending = false;
-	    setTimeout(room.checkuserstatus, 500);
+		console.log(result.currentframe);
+		console.log(result.rounds);
+	    if (result.currentframe != result.rounds) {
+		  setTimeout(room.checkuserstatus, 500);
+		} else {
+		   room.status = "9";
+		   UI.showMainMessage('游戏结束，请等待最后结果，感谢您的参与！');
+		   setTimeout(room.checkuserstatus, 500);
+		}
 	  } else if (room.status == "8") { 
 	    UI.hideSocreInfo();
 		UI.hideMainMessage();
