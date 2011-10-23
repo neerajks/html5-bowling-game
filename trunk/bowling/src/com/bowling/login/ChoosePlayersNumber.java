@@ -66,6 +66,7 @@ public class ChoosePlayersNumber extends HttpServlet {
           bowlingScene.put("scorearray", scoreArray);
           bowlingScene.put("currentframe", 1);
           bowlingScene.put("totalscore", 0);
+          bowlingScene.put("joinnumber", Constant.JOINNUMBER);
           bowlingScene.put("currentorder", Constant.current_order);
           String currentUserName = Constant.USERArray[Constant.current_order].getUsername();
           bowlingScene.put("currrentusername", currentUserName);

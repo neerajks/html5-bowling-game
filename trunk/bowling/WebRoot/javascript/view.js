@@ -17,7 +17,7 @@ var room = {
     join: function() {
 
         var urls = document.location.toString().replace('http://', 'ws://').replace('https://', 'wss://');
-        var location = urls.substring(0, urls.indexOf("bowling")) + "bowling/bajax/";
+        var location = urls.substring(0, urls.indexOf("bowlingsvn")) + "bowlingsvn/bajax/";
         this._ws = new WebSocket(location, "bajax");
         this._ws.onopen = this._onopen;
         this._ws.onmessage = this._onmessage;
@@ -67,20 +67,25 @@ var room = {
 			  var ay = result.ay;
 			  room.order = result.order;
 			  room.current_frame = result.currentframe;
-			  room.current_username = result.currentusername;
+			  room.current_username = result.currentusername; 
+			  room.next_username = result.nextusername;
 			  Bowling.KickOneFrame(ax, ay, function(score) {
 			    var jsonBody = {};
 				jsonBody["order"] = room.order;
 				jsonBody["score"] = score;
 				var current_frame = room.current_frame;
-				var current_username = room.current_username;
+				var next_username = room.next_username;
                 var encoded_check = JSON.stringify(jsonBody);
 				room.setScoreByFrameAndOrder(room.order, score, current_frame);
-				VUI.showMainMessage(current_username + "正在扔球，其他玩家请等候..."); 
+				VUI.showMainMessage(next_username + "正在扔球，其他玩家请等候..."); 
 			    room._send(encoded_check);
 			  });
 			} else if (result.status == 4) {
-			    /**重置服务器UI*/
+			   VUI.hideMainMessage();
+			   room.deleteTd('tr1');
+			   room.deleteTd('tr2');
+			   room.deleteTd('tr3');
+			   VUI.showWaitWrapper();
 			}
         }
     },
@@ -133,16 +138,18 @@ var room = {
         return 9;
     },
     deleteTd: function(id) {
-        var tdnode = $(id).childNodes.length;
-        if (tdnode > 0) {
-            for (var i = 0; i < tdnode; i++) {
-                $(id).deleteCell(0);
-            }
-        }
+    	if($(id)){
+	        var tdnode = $(id).childNodes.length;
+	        if (tdnode > 0) {
+	            for (var i = 0; i < tdnode; i++) {
+	                $(id).deleteCell(0);
+	            }
+	        }
+    	}
     },
     init: function() {
         var qrCode = document.getElementById('qrCode');
-        var url = 'http://' + location.host + '/bowling/mobileball.html';
+        var url = 'http://' + location.host + '/bowlingsvn/mobileball.html';
         $('client-url').innerHTML = url;
         $('client-url').setAttribute('href', url);
         var width = 180;

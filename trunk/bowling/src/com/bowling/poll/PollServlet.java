@@ -50,6 +50,11 @@ public class PollServlet extends HttpServlet {
             bowlingScene.put("status", BowlingStatus.THROWING_BALL.getState());
             bowlingScene.put("currentframe", user.getCurrentFrame());
             bowlingScene.put("currentusername", user.getUsername());
+            
+            int nextOrder = order + 1;
+            if (nextOrder > Constant.NUMBERCOUNT) nextOrder = 1;
+            User nextUser = Constant.USERArray[nextOrder];
+            bowlingScene.put("nextusername", nextUser.getUsername());
             Constant.Connection.sendMessage(bowlingScene.toString());
             polluser.put("status", String.valueOf(UserState.WAITING_FOR_SCORE.getState()));
           } else if (status.compareTo(WAITING_FOR_SCORE) == 0) {
