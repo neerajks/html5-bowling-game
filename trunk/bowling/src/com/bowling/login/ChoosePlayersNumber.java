@@ -85,30 +85,5 @@ public class ChoosePlayersNumber extends HttpServlet {
 
   }
 
-  /*
-   * public void updateUserStatus(JSONObject json) throws JSONException{
-   * if(!json.isNull("username") && Constant.NUMBERCOUNT==0){
-   * Constant.initConst();
-   * 
-   * }else if(!json.isNull("username") && Constant.NUMBERCOUNT>0){
-   * if(Constant.NUMBERCOUNT==1){ Constant.initConst(); }else
-   * if(!json.isNull("username") && Constant.NUMBERCOUNT==2){
-   * Constant.JOINNUMBER=1; Constant.NUMBERCOUNT=1;
-   * if((json.getString("username")).equals(Constant.user1.username)){
-   * Constant.user1=null; Constant.user2.setStatus("1"); }else
-   * if((json.getString("username")).equals(Constant.user2.username)){
-   * Constant.user2=null; Constant.user1.setStatus("1"); } }else
-   * if(!json.isNull("username") && Constant.NUMBERCOUNT==3){
-   * Constant.NUMBERCOUNT=2; Constant.JOINNUMBER=2;
-   * if(Constant.user1.getUsername().equals(json.getString("username"))){
-   * Constant.user1=null; Constant.user2.setStatus("1");
-   * Constant.user2.setOrder("1"); Constant.user3.setOrder("2"); }else
-   * if(Constant.user2.getUsername().equals(json.getString("username"))){
-   * Constant.user2=null; Constant.user3.setStatus("1");
-   * Constant.user3.setOrder("2"); }else
-   * if(Constant.user3.getUsername().equals(json.getString("username"))){
-   * Constant.user3=null; Constant.user1.setStatus("1"); } }
-   * 
-   * } }
-   */
+ 
 }

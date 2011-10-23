@@ -24,7 +24,7 @@ public  class Util {
 		return buffer.toString();
 	}
 
-	public static String getPollRank() {
+	/*public static String getPollRank() {
 		int num1=0;
 		int num2=0;
 		int num3=0;
@@ -70,6 +70,6 @@ public  class Util {
 		if(temp==num3)
 			return "祝贺玩家："+name3+" 获胜！";
 		return "";
-	}
+	}*/
 
 }
