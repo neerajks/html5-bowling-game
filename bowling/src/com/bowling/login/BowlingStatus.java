@@ -4,7 +4,8 @@ public enum BowlingStatus {
   NO_ONE_JOIN(0),
   WAITING_FOR_PLAYERS(1),
   WAITING_FOR_MOBILE(2),
-  THROWING_BALL(3);
+  THROWING_BALL(3),
+  RESET(4);
   
   private int value;
   // Constructor 

@@ -84,42 +84,6 @@ public class PollServlet extends HttpServlet {
       e.printStackTrace();
     }
 
-    /*
-     * try{ if(Constant.Connection==null){
-     * response.setContentType("text/json;charset=utf-8"); byte[] bytes =
-     * ("{\"message\":\""+Constant.MESSAGE2+"\"}").getBytes("utf-8");
-     * response.setContentLength(bytes.length);
-     * response.getOutputStream().write(bytes); return; } Constant.jsonpoll=new
-     * JSONObject(jsonpoll); if(Constant.Connection!=null){
-     * Constant.Connection.sendMessage(Constant.jsonpoll.toString()); }
-     * 
-     * 
-     * boolean flag=false; if(Constant.isThrowingBall){ StringBuilder buf = new
-     * StringBuilder(); buf.append("{\"username\":\"");
-     * buf.append(Constant.jsonpoll.getString("username"));
-     * buf.append("\",\"login_id\":\"");
-     * buf.append(Constant.jsonpoll.getString("login_id"));
-     * buf.append("\",\"status\":\""); if(Constant.user1!=null &&
-     * Constant.jsonpoll.getString("username").equals(Constant.user1.username)){
-     * buf.append(Constant.user1.status); flag=true; } if(Constant.user2!=null
-     * &&
-     * Constant.jsonpoll.getString("username").equals(Constant.user2.username)){
-     * buf.append(Constant.user2.status); flag=true; } if(Constant.user3!=null
-     * &&
-     * Constant.jsonpoll.getString("username").equals(Constant.user3.username)){
-     * buf.append(Constant.user3.status); flag=true; } if(!flag)
-     * buf.append(Constant.jsonpoll.getString("status")); buf.append("\"}");
-     * User
-     * user=Constant.synchronoususer(Constant.jsonpoll.getString("username"));
-     * Constant.timeOut(user);
-     * response.setContentType("text/json;charset=utf-8"); byte[] bytes =
-     * buf.toString().getBytes("utf-8");
-     * response.setContentLength(bytes.length);
-     * response.getOutputStream().write(bytes); }else{
-     * response.setContentType("text/json;charset=utf-8"); PrintWriter out =
-     * response.getWriter(); out.print("{action:\"poll\"}"); } }catch(Exception
-     * e){ e.printStackTrace(); }
-     */
   }
 
 }

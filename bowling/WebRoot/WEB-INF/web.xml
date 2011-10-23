@@ -51,17 +51,6 @@
   </servlet-mapping>
   
   <servlet>
-    <servlet-name>choicenumber</servlet-name>
-    <servlet-class>com.bowling.login.SettinggameServlet</servlet-class>
-    <load-on-startup>1</load-on-startup>
-  </servlet>
-
-  <servlet-mapping>
-    <servlet-name>choicenumber</servlet-name>
-    <url-pattern>/choicenumber/*</url-pattern>
-  </servlet-mapping>
-  
-    <servlet>
     <servlet-name>chooseplayersnumber</servlet-name>
     <servlet-class>com.bowling.login.ChoosePlayersNumber</servlet-class>
     <load-on-startup>1</load-on-startup>
@@ -71,4 +60,16 @@
     <servlet-name>chooseplayersnumber</servlet-name>
     <url-pattern>/chooseplayersnumber/*</url-pattern>
   </servlet-mapping>
+
+  <servlet>
+    <servlet-name>resetgame</servlet-name>
+    <servlet-class>com.bowling.poll.ResetGameServlet</servlet-class>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>resetgame</servlet-name>
+    <url-pattern>/resetgame/*</url-pattern>
+  </servlet-mapping>
+
 </web-app>

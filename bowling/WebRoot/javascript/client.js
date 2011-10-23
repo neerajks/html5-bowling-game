@@ -20,12 +20,6 @@ var room = {
         room.username = $F('username');
         var jsonpoll = {};
         jsonpoll["username"] = room.username;
-        /*jsonpoll["login_id"] = room.login_id;
-        jsonpoll["status"] = room.status;
-        jsonpoll["order"] = room.ay;
-        jsonpoll["sendor"] = room.ax;
-        jsonpoll["g"] = room.order;
-        jsonpoll["choicenumber"] = room.id;*/
         if(room.isUserNameNull() == false) {
           var encoded_check = JSON.stringify(jsonpoll);
           xhr('POST', 'bajax/login', encoded_check, room.loginCallback);
@@ -72,122 +66,6 @@ var room = {
 	  }
 	},
 	
-    poll: function(m) {
-    	if(room.username != undefined && m.joinnumber == 0 && m.numbercount == 0){
-    		UI.hideGameMode();
-    		UI.hideMainMessage();
-    	}
-        if (room.username == undefined && m.joinnumber == 0 && m.numbercount == 0) {
-            UI.hideMainMessage();
-            UI.hideWaitingOthersMessage();
-            UI.showLoginForm();
-        } else if (room.username == undefined && m.joinnumber &&  m.joinnumber!= 0 && m.numbercount == 0) {
-        	console.log(room.username+'--'+m.joinnumber+'--'+m.numbercount);
-            UI.hideLoginForm();
-            UI.showMainMessage('游戏正在创建，稍后登陆！');
-            return;
-        } else if (room.username == undefined && m.joinnumber != 0 && m.numbercount != 0 && m.message && m.message.length > 7) {
-            UI.hideLoginForm();
-            UI.showMainMessage(m.message);
-            return;
-        } else if (room.username == undefined && m.joinnumber != 0 && m.numbercount != 0) {
-            UI.hideMainMessage();
-            UI.hideWaitingOthersMessage();
-            UI.showLoginForm();
-            return;
-        }
-        if (room.username != undefined && m.numbercount != 0 && m.score != undefined) {
-            $('#current-inning-score').html(m.total);
-            $('#total-score').html(m.score);
-            UI.showScoreInfo();
-            UI.showGameInfo(room.username);
-        } else {
-            UI.hideGameInfo();
-            UI.hideSocreInfo();
-        }
-        if (m.message && m.message == 'gameend') {
-            room.flag = true;
-            room.restart(m);
-        }
-        if (m.message && (m.message == '1' || m.message == '2' || m.message == '3')) {
-            UI.hideGameMode();
-            UI.hideLoginForm();
-            UI.showWaitingOthersMessage();
-            return;
-        }
-        if (m.iscreate == 'true') $('#infor').hide();
-        if (m.message == 'null' && !room.flag &&　room.flag!=undefined) {
-            UI.hideMainMessage();
-            UI.showLoginForm();
-            return;
-        }
-        if (m.order == '1' && m.iscomplete && m.iscreate == false) {
-            UI.hideLoginForm();
-            UI.showGameMode();
-        } else if (m.numbercount != 0 && m.numbercount != m.joinnumber) {
-            UI.hideLoginForm();
-            UI.hideMainMessage();
-            UI.showWaitingOthersMessage();
-            return;
-        }
-
-        if (m.status == '1' && m.iscomplete) {
-            UI.hideWaitingOthersMessage();
-            UI.showMainMessage(room.notice);
-            room.throwFlag = true;
-        } else if (m.iscreate == true && m.status == '0' && m.numbercount != 0 && m.numbercount == m.joinnumber) {
-            UI.hideLoginForm();
-            UI.hideWaitingOthersMessage();
-            if(isPad){
-            	UI.showMainMessage('玩家:' + m.pollusername + ',  正在抛球,请稍后！');
-            	$('#main-message').css("background-image","url(popup_backgroud.png)");
-            }else{
-            	UI.showMainMessage('玩家:' + m.pollusername + ',  正在抛球,请稍后！');
-            }
-        }
-
-        if (m.message && m.message == 'restart') {
-            UI.hideGameResult();
-            room.throwFlag = false;
-            UI.showLoginForm();
-            return;
-        }
-        room.username = m.username;
-        room.status = m.status;
-        room.login_id = m.login_id;
-        room.order = m.order;
-
-    },
-    close: function() {
-    	closejson={};
-    	closejson["username"]=room.username;
-    	closejson["status"]=room.status;
-    	closejson["close"]=true;
-    	var encoded_check = JSON.stringify(closejson);
-        xhr('POST', 'bajax/choicenumber', encoded_check, room.poll);
-    },
-
-    restart: function(m) {
-        if (m.username == room.username && m.order == '1') {
-            UI.hideMainMessage();
-            UI.hideLoginForm();
-            UI.showGameResult('win');
-            return;
-
-        } else if (m.win == room.username) {
-            UI.hideMainMessage();
-            UI.hideLoginForm();
-            //UI.showMainMessage('win');
-            UI.showGameResult('win');
-            return;
-        } else {
-            UI.hideMainMessage();
-            UI.hideLoginForm();
-            //UI.showMainMessage('lose');
-            UI.showGameResult('lose');
-            return;
-        }
-    },
     checkuserstatus: function(result) {
 	  /*WAITING_FOR_OTHERS(4),
       WAITING_THROWING(5),
@@ -226,7 +104,9 @@ var room = {
 	    jsonpoll["status"] = "9";
 		jsonpoll["order"] = room.order;  
 	  } else if (room.status == "10") {
-	    UI.showMainMessage(result.overallresult);
+	    var result = result.overallresult;
+	    UI.showGameResult(result);
+		room.resetGame();
 		return;
 	  }
 	  var encoded_check = JSON.stringify(jsonpoll);
@@ -242,7 +122,13 @@ var room = {
 		  //setTimeout(room.checkuserstatus, 500);
     },
 	
-	getOverallResult : function() {
+	resetGame : function() {
+	  var jsonpoll = {};
+	  jsonpoll.order = room.order;
+	  var encoded_check = JSON.stringify(jsonpoll);
+	  xhr('POST', 'bajax/resetgame', encoded_check, function(result) {
+	    console.log(result);
+	  });
 	  
 	},
 	send: function() {
@@ -308,7 +194,7 @@ var room = {
 	    UI.hideSocreInfo();
 		UI.hideMainMessage();
 		UI.showMainMessage('服务器未连接，请重新刷新页面！');
-	  }
+	  } 
 	},
 	
     choicejoinnumber: function(e) {
@@ -320,11 +206,6 @@ var room = {
         choicenumber["choicenumber"] = e.getAttribute('data-id');
         encoded_check = JSON.stringify(choicenumber);
         xhr('POST', 'bajax/chooseplayersnumber', encoded_check, room.checkuserstatus);
-    },
-    initgame: function() {
-        UI.hideGameResult();
-        room.complete;
-        document.location.href = document.location.toString();
     },
 	
     isUserNameNull:function(){

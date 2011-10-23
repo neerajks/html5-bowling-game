@@ -79,56 +79,9 @@ var room = {
 				VUI.showMainMessage(current_username + "正在扔球，其他玩家请等候..."); 
 			    room._send(encoded_check);
 			  });
+			} else if (result.status == 4) {
+			    /**重置服务器UI*/
 			}
-            /*if (result.g != undefined) {
-                var score = room._returnscore(result.g, result.sendor);
-                jsonresult = '{"username":"' + result.username + '","' + 'score":"' + room._returnscore(result) + '"}';
-                room._send(jsonresult);
-            }
-            if(result.message && result.message=='close'){
-            	VUI.showMainMessage('玩家：'+result.username+',已经退出！');
-            	window.setTimeout(VUI.refresh, 10000);
-            }
-            if (result.message && result.message.length > 7) {
-                VUI.hideWaitWrapper();
-                VUI.showMainMessage(result.message);
-                window.setTimeout(VUI.refresh, 10000);
-                return;
-            }
-            if (result.message && result.message == 'end') {
-                //VUI.showMainMessage(m.flag);
-            	// window.setTimeout(VUI.hideMainMessage(),1000);
-                VUI.hideMainMessage();
-                VUI.hidePlayer1();
-                VUI.hidePlayer2();
-                VUI.hidePlayer3();
-
-            }
-            if (result.message && result.message == 'win') {
-                VUI.hideWaitWrapper();
-                VUI.showMainMessage('玩家：' + m.message + '获胜！');
-                window.setTimeout(VUI.hideMainMessage(), 1000);
-            }
-            var status;
-            if (result.username != undefined && result.status == '0') status = 'waiting..';
-            if (result.username != undefined && result.status == '1') {
-                VUI.hideWaitWrapper();
-                VUI.showMainMessage('轮到玩家：' + result.username + '击球');
-                window.setTimeout(VUI.hideMainMessage, 5000);
-            }
-            if (result.username != undefined && result.order == '1') {
-                VUI.showPlayer1('玩家：' + result.username + '已登录');
-                room.setThInfors(result.scorearray.length,'th_infors');
-                room.setscore(result.username, result.scorearray, result.score, result.total, 'tr1');
-            }
-            if (result.username != undefined && result.order == '2') {
-                VUI.showPlayer2('玩家：' + result.username + '已登录');
-                room.setscore(result.username, result.scorearray, result.score, result.total, 'tr2');
-            }
-            if (result.username != undefined && result.order == '3') {
-                VUI.showPlayer3('玩家：' + result.username + '已登录');
-                room.setscore(result.username, result.scorearray, result.score, result.total, 'tr3');
-            }*/
         }
     },
     setThInfors:function(total,id){

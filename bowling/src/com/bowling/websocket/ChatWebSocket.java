@@ -21,15 +21,12 @@ public class ChatWebSocket implements WebSocket.OnTextMessage
     this._connection = connection;
     System.out.println("onopen");
     Constant.Connection = connection;
-    if (Constant.jsonpoll != null) {
-      try {
-        this._connection.sendMessage(Constant.jsonpoll.toString());
-        Constant.isThrowingBall = false;
-      } catch (IOException e) {
-        e.printStackTrace();
-      }
+    try {
+      this._connection.sendMessage("connect");
+    } catch (IOException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
     }
-
   }
 
   public void onMessage(final byte frame, final byte[] data, final int offset, final int length) {
@@ -53,51 +50,11 @@ public class ChatWebSocket implements WebSocket.OnTextMessage
         e.printStackTrace();
       }
     }
-    /*
-     * try { if(!data.equals("connect")){ a= new JSONObject(data);
-     * if(Constant.user1!=null &&
-     * a.get("username").equals(Constant.user1.username)){
-     * Constant.user1.total++; Constant.user1.score+=Integer.parseInt((String)
-     * a.get("score"));
-     * Constant.user1.scorearray[Constant.user1.total-1]=Integer
-     * .parseInt((String) a.get("score"));
-     * 
-     * if(Constant.user2!=null){ Constant.user2.status="1";
-     * Constant.user1.status="0"; }else if(Constant.user3!=null){
-     * Constant.user3.status="1"; Constant.user1.status="0"; }
-     * 
-     * Constant.isThrowingBall=true; } if(Constant.user2!=null &&
-     * a.get("username").equals(Constant.user2.username)){
-     * Constant.user2.total++; Constant.user2.score+=Integer.parseInt((String)
-     * a.get("score"));
-     * Constant.user2.scorearray[Constant.user2.total-1]=Integer
-     * .parseInt((String) a.get("score")); if(Constant.user3!=null){
-     * Constant.user3.status="1"; Constant.user2.status="0"; }else
-     * if(Constant.user1!=null){ Constant.user1.status="1";
-     * Constant.user2.status="0"; }
-     * 
-     * Constant.isThrowingBall=true; } if(Constant.user3!=null &&
-     * a.get("username").equals(Constant.user3.username)){
-     * 
-     * Constant.user3.score+=Integer.parseInt((String) a.get("score"));
-     * Constant.
-     * user3.scorearray[Constant.user3.total-1]=Integer.parseInt((String)
-     * a.get("score")); Constant.user3.total++; if(Constant.user1!=null){
-     * Constant.user1.status="1"; Constant.user3.status="0"; }else
-     * if(Constant.user2!=null){ Constant.user2.status="1";
-     * Constant.user3.status="0"; }
-     * 
-     * Constant.isThrowingBall=true; } send(a); }else
-     * if(data.equals("connect")){ Constant.initConst(); }
-     * 
-     * System.out.println("onmessage"); } catch (Exception e) {
-     * e.printStackTrace(); } if (data.indexOf("disconnect") >= 0) {
-     * this._connection.disconnect(); }
-     */
+ 
 
   }
 
-  public void send(JSONObject a) {
+  /*public void send(JSONObject a) {
     try {
       if (Constant.user1 != null) {
         a = new JSONObject();
@@ -117,7 +74,7 @@ public class ChatWebSocket implements WebSocket.OnTextMessage
     } catch (Exception e) {
       e.printStackTrace();
     }
-  }
+  }*/
 
   public void onClose(final int code, final String message) {
 
