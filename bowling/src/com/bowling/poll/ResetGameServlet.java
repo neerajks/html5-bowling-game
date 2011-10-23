@@ -29,6 +29,7 @@ public class ResetGameServlet extends HttpServlet{
     hasFinishedUsersNumber ++;
     if (hasFinishedUsersNumber == Constant.NUMBERCOUNT) {
       //reset game
+      ///compute ranks 	
       Constant.resetConstant();
       //reset bowling review
       
@@ -42,7 +43,9 @@ public class ResetGameServlet extends HttpServlet{
       Constant.Connection.sendMessage(bowlingScene.toString());
       hasFinishedUsersNumber = 0;
     }
-  }
-
-    
+    byte[] bytes = "{}".toString().getBytes("utf-8");
+    response.setContentLength(bytes.length);
+    response.setContentType("text/json;charset=utf-8");
+    response.getOutputStream().write(bytes);
+  }   
 }

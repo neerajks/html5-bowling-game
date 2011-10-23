@@ -6,9 +6,13 @@ function xhr(method, uri, body, handler) {
     var req = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
     req.onreadystatechange = function() {
         if (req.readyState == 4 && handler) {
-            var result = JSON.parse(req.responseText);
-            handler(result);
-        }
+        	if (req.status == 200) {
+        	    var result = JSON.parse(req.responseText);
+                handler(result);
+            } else {
+            	 document.location.href = document.location.toString();
+            }
+        } 
     }
     req.open(method, uri, true);
     req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
@@ -104,7 +108,8 @@ var room = {
 	    jsonpoll["status"] = "9";
 		jsonpoll["order"] = room.order;  
 	  } else if (room.status == "10") {
-	    var result = result.overallresult;
+	    var result = room.overallresult;
+	    UI.hideMainMessage();
 	    UI.showGameResult(result);
 		room.resetGame();
 		return;
@@ -115,6 +120,7 @@ var room = {
 		  xhr('POST', 'bajax/check', encoded_check, function(result) {
 			  if (result) {
 				room.status = result.status;
+				room.overallresult = result.overallresult;
 			  }
 			  setTimeout(room.checkuserstatus, 500);
 			 });
@@ -131,6 +137,9 @@ var room = {
 	  });
 	  
 	},
+	initgame: function() {
+       document.location.href = document.location.toString();
+    },
 	send: function() {
 	  if (!room.isSending) 
 	    room.isSending = false;
@@ -187,7 +196,7 @@ var room = {
 		  setTimeout(room.checkuserstatus, 500);
 		} else {
 		   room.status = "9";
-		   UI.showMainMessage('游戏结束，请等待最后结果，感谢您的参与！');
+		   UI.showMainMessage('本局结束，请等待最后结果，感谢您的参与！');
 		   setTimeout(room.checkuserstatus, 500);
 		}
 	  } else if (room.status == "8") { 
