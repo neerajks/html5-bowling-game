@@ -19,9 +19,11 @@ canvas {
   top: 20px;
   left: 20px;
   width: 460px;
-  background: transparent url(../images/scoring_background.png) 0 0 no-repeat;
+  /*background: transparent url(../images/scoring_background.png) 0 0 no-repeat;*/
   background-size: 100% 100%;
   padding: 12px;
+  background:rgba(255,255,255,0.6);
+  border-radius:10px;
 }
 
 #mytable {
@@ -34,22 +36,22 @@ canvas {
   text-align: center;
 }
 
-th {
+/*th {
   border-top: 1px solid transparent;;
-}
+}*/
 
 tr > td:first-child, tr > th:first-child {
-  border-left: 1px solid transparent;
+  /*border-left: 1px solid transparent;*/
   width:70px;
 }
 
 tr > td:last-child, tr > th:last-child {
-  border-right: 1px solid transparent;
+  /*border-right: 1px solid transparent;*/
   width: 50px;
 }
 
 tbody > tr:last-child > td {
-  border-bottom: 1px solid transparent;
+  /*border-bottom: 1px solid transparent;*/
 }
 
 #waiting-wrapper {
@@ -102,8 +104,8 @@ tbody > tr:last-child > td {
 #main-message {
   display: none;
   width: 197px;
-  height: 125px;
-  padding: 30px;
+  height: 90px;
+  padding: 65px 30px 30px 30px;
   text-align: left;
   color: white;
   background: transparent url(../images/waiting_message_bg.png) 0 0 no-repeat;
@@ -113,7 +115,7 @@ tbody > tr:last-child > td {
   background-size: cover;
 }
 .changeColor{
-  background-color:red;
+  background-color:rgba(151,231,250,0.5);
 }
 #ending_wrapper{
   color: #ff5400;
@@ -133,9 +135,10 @@ tbody > tr:last-child > td {
   width: 436px;
   height: 200px;
   padding-top:100px;
-  box-shadow:0px 0px 10px #ccc;
+  margin:0 auto;
+  margin-top:200px;
+  /*box-shadow:0px 0px 10px #ccc;*/
   background: transparent url(../images/ending.png) 0 0 no-repeat;
-  
 }
 #text_end{
   width:150px;
