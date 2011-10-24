@@ -56,6 +56,8 @@
  	  VUI.hideEndingWraper();
  	  VUI.hideWaitingMessage();
 	  VUI.showWaitWrapper();
+	  init.audio.stop(Bowling.Ball_BACKGROUND_MUSIC);
+	  init.audio.play(Bowling.START_BACKGROUND_MUSIC,true);
   },
   
   showEndingWraper : function(){
