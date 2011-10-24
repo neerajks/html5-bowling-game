@@ -1,11 +1,17 @@
-Bowling.BACKGROUND_MUSIC = "bg_music";
+Bowling.START_BACKGROUND_MUSIC = "start_backgroup_music";
+Bowling.Ball_BACKGROUND_MUSIC="ball_bg_music";
+Bowling.ENDING_MUSIC="ending_music";
+Bowling.STIKE_MUSIC="stike_music";
 Bowling.KICK_MUSIC = "kick_music";
 Bowling.NO_KICK_MUSIC = "nohit";
 Bowling.ROLL_MUSIC = "bowlingroll";
 
 Bowling.Audio = function(root_element) {
   this.music_db = { };
-  this.music_db[Bowling.BACKGROUND_MUSIC] = ["audio/bg_music_loop.mp3", 0.1];  
+  this.music_db[Bowling.START_BACKGROUND_MUSIC] = ["audio/start_music_loop.mp3", 0.1];  
+  this.music_db[Bowling.Ball_BACKGROUND_MUSIC] = ["audio/bg_music_loop.mp3", 0.1];
+  this.music_db[Bowling.ENDING_MUSIC] = ["audio/ending.mp3", 1.0];
+  this.music_db[Bowling.STIKE_MUSIC] = ["audio/stike.mp3", 1.0];
   this.music_db[Bowling.KICK_MUSIC] = ["audio/bowlinghit.ogg", 1.0];  
   this.music_db[Bowling.NO_KICK_MUSIC] = ["audio/nohit.mp3", 1.0];  
   this.music_db[Bowling.ROLL_MUSIC] = ["audio/bowlingroll.ogg", 1.0];  
@@ -38,6 +44,11 @@ Bowling.Audio.prototype = {
 	  audio.loop = true;
 	}
     audio.play();
+  },
+  
+  stop: function(music_name){
+	  var audio = document.getElementById(music_name);
+	  audio.pause();
   },
   /*playBackground : function(audio_tag_id) {
     var audio = document.getElementById(audio_tag_id);
