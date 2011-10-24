@@ -44,7 +44,7 @@ Bowling.Init = function (element) {
   this.objects.push(this.ball);  
   
   this.audio = new Bowling.Audio(document.body);
-  this.audio.play(Bowling.BACKGROUND_MUSIC, true);  
+  this.audio.play(Bowling.START_BACKGROUND_MUSIC, true);  
 }
 
 
