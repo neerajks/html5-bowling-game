@@ -113,9 +113,16 @@ var room = {
 	  console.log("current_frame:" + current_frame);
 	  
 	  var id = "tr" + order;
-	 // var totalsocre=
+	  var totalsocre=0;
 	  var td = document.querySelector("#" + id + " > td:nth-child(" + (current_frame+2) + ")");
-	  td.innerHTML = score;
+    td.innerHTML = score;
+	  var length=$(id).childNodes.length;
+    var totaltd=document.querySelector("#" + id + " > td:nth-child(" + length + ")");
+    for(var i=2;i<length;i++){
+       var sco=Number(document.querySelector("#" + id + " > td:nth-child(" + i + ")").innerText);
+          totalsocre+=sco;
+    }
+    totaltd.innerHTML = totalsocre;
 	},
 	trAddCss: function(order){
 		id='tr'+order;
