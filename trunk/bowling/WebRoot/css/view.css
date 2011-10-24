@@ -112,3 +112,37 @@ tbody > tr:last-child > td {
   border-radius: 10px;
   background-size: cover;
 }
+.changeColor{
+  background-color:red;
+}
+#ending_wrapper{
+  color: #ff5400;
+  font-size:22px;
+  width:100%;
+  height:100%;
+  display: -webkit-box;
+  -webkit-box-pack: center;
+  -webkit-box-align: center;
+  background-size: cover;
+  position:absolute;
+  top:0px;
+  left:0px;
+  display:none;
+}
+#ending{
+  width: 436px;
+  height: 200px;
+  padding-top:100px;
+  box-shadow:0px 0px 10px #ccc;
+  background: transparent url(../images/ending.png) 0 0 no-repeat;
+  
+}
+#text_end{
+  width:150px;
+  height:150px;
+  margin:0 auto;
+}
+#name,#winner{
+  margin:0;
+  padding:0;
+}
