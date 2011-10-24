@@ -11,9 +11,11 @@ public  class Util {
 		StringBuffer buffer=new StringBuffer();
 		try {
 			
-			BufferedReader bodyReader = request.getReader();
-			String line = bodyReader.readLine();
-			while( line != null ) {
+      InputSteam raw = request.getInputStream();
+      InputStreamReader inputStreamReader = new InputStreamReader(raw, "utf8");
+      BufferedReader bodyReader = new BufferedReader(inputStreamReader);
+      String line = bodyReader.readLine();
+			while( line != null){
 				buffer.append(line);
 				line = bodyReader.readLine();
 			}
