@@ -52,6 +52,8 @@ var room = {
 			  room.setThInfors(result.scorearray.length, 'th_infors');
 			  room.setscore(username, result.scorearray, result.totalscore, 'tr' + joinnumber);
 			} else if (result.status == 2) {
+			  init.audio.stop(Bowling.START_BACKGROUND_MUSIC);
+			  init.audio.play(Bowling.Ball_BACKGROUND_MUSIC,true);
 			  VUI.hideWaitWrapper();
 			  var joinnumber = result.joinnumber;
 			  room.order = joinnumber;
@@ -63,6 +65,7 @@ var room = {
 			  VUI.showMainMessage(currrentusername + "正在扔球，其他玩家请等候...");
 			  room.trAddCss(joinnumber);
 			} else if (result.status == 3) {
+			  
 			  VUI.hideMainMessage();
 			  var ax = result.ax;
 			  var ay = result.ay;
@@ -71,6 +74,9 @@ var room = {
 			  room.current_username = result.currentusername; 
 			  room.next_username = result.nextusername;
 			  Bowling.KickOneFrame(ax, ay, function(score) {
+				if(score && score==10){
+					init.audio.play(Bowling.STIKE_MUSIC);
+				}
 			    var jsonBody = {};
 				jsonBody["order"] = room.order;
 				jsonBody["score"] = score;
@@ -83,6 +89,7 @@ var room = {
 			    room._send(encoded_check);
 			  });
 			} else if (result.status == 4){
+			   init.audio.play(Bowling.ENDING_MUSIC);
 			   VUI.hideMainMessage();
 			   VUI.showWinname(result.winer[0],result.winer[1]);
 			   VUI.showWinscore();
