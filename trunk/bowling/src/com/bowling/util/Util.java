@@ -1,6 +1,8 @@
 package com.bowling.util;
 
 import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 
 
 import javax.servlet.http.HttpServletRequest;
@@ -11,7 +13,7 @@ public  class Util {
 		StringBuffer buffer=new StringBuffer();
 		try {
 			
-      InputSteam raw = request.getInputStream();
+      InputStream raw = request.getInputStream();
       InputStreamReader inputStreamReader = new InputStreamReader(raw, "utf8");
       BufferedReader bodyReader = new BufferedReader(inputStreamReader);
       String line = bodyReader.readLine();
