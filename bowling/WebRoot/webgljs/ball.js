@@ -4,6 +4,7 @@ Bowling.SPHERE_RADIUS = 20;
 
 Bowling.Ball = function(webgl, position, gravityEngine) {
   Bowling.Object.call(this);
+  this.velocity = [0, 0, 0];
   var scope = this;
   scope.isReadyOfBallImg = false;
   scope.countOfCubeImg = 0;  
@@ -70,6 +71,26 @@ Bowling.Ball.prototype.getReady = function() {
 
 Bowling.Ball.prototype.setVelocity = function(velocity) {
   this.velocity = velocity;
+}
+
+Bowling.Ball.prototype.isZeroVelocity = function() {
+  var v = this.velocity;
+  if ((v[0] == 0) && (v[1] == 0) && (v[2] == 0)) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+Bowling.Ball.prototype.isKickedBottle = function() {
+  var z_start = Bowling.BOTTLE.position[2] + Bowling.BOTTLE_Z_SPAN * 3 * 3;
+  var z_end = Bowling.BOTTLE.position[2];
+  var z_cur = this.current_position[2];
+  if ( z_cur > z_end && z_cur < z_start) {
+    return true;
+  } else {
+    return false;
+  }
 }
 
 Bowling.Ball.prototype.isOnTrack = function() {

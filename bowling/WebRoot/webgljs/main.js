@@ -23,7 +23,7 @@ Bowling.Init = function (element) {
   this.gravityEngine = new Bowling.GravityEngine();
   
 
-  var span = Bowling.SPHERE_RADIUS * 1.5;
+  var span = Bowling.BOTTLE_Z_SPAN;
   Bowling.BOTTLE.position[0] += (Bowling.TRACK_WIDTH - 7*span)/2;
   for (var i = 4; i > 0; i--) {
 	for (var j = 0; j < i; j++) {
@@ -42,6 +42,9 @@ Bowling.Init = function (element) {
   
   this.ball = new Bowling.Ball(this.webgl, Bowling.BALL.position, this.gravityEngine);
   this.objects.push(this.ball);  
+  
+  this.audio = new Bowling.Audio(document.body);
+  this.audio.play(Bowling.BACKGROUND_MUSIC, true);  
 }
 
 
@@ -71,7 +74,10 @@ Bowling.Init.prototype = {
 	  var obj = this.objects[i];
       obj.addGravityObj(this.gravityEngine);
 	}
-	init.ball.setVelocity([0, 0, 0])
+	init.ball.setVelocity([0, 0, 0]);
+	var camera = init.webgl.getCamera();
+    Bowling.util.setPosition(camera, Bowling.CAMERA.position);
+    Bowling.util.setPosition(camera.target, Bowling.CAMERA.target_position);
   }
 }
 
@@ -91,17 +97,31 @@ Bowling.LoadResource = function() {
 Bowling.Render = function() {
   if (init.gravityEngine) {
 	init.gravityEngine.integrate();
+	
+	if (!init.ball.isZeroVelocity()) {
+	  var camera = init.webgl.getCamera();
+	  camera.position.z -= 10;
+	  camera.target.position.z -= 10;
+	}
 	if (!init.ball.isOnTrack()) {
 	  init.ball.setVelocity([0, -30, -2]);
       if (init.ball.isOnGround()) {
-	    var count = 0;
-	    for (var i = 0; i < 10; i++) {
-	      var bottle = init.objects[i];
-	      if (bottle.isKicked()) count++;
-	    }
-		Bowling.returnScore(count);
+		
 		init.resetPosition();
 		init.gravityEngine.integrate();
+		var count = Bowling.ComputeKickedBottle();
+		Bowling.returnScore(count);
+		if (count == 0) {
+		  init.audio.play(Bowling.NO_KICK_MUSIC);
+		}
+	  }
+	} else {
+	  if (Bowling.ComputeKickedBottle() != 0) {
+	    init.audio.play(Bowling.KICK_MUSIC);
+	  } else {
+	    if (!init.ball.isZeroVelocity()) {
+	      //init.audio.play(Bowling.ROLL_MUSIC);
+		}
 	  }
 	}
     init.updateMatrix();
@@ -110,7 +130,26 @@ Bowling.Render = function() {
   Bowling.util.animate(Bowling.Render);
 }
 
+Bowling.ComputeKickedBottle = function() {
+  var count = 0;
+  for (var i = 0; i < 10; i++) {
+    var bottle = init.objects[i];
+    if (bottle.isKicked()) count++;
+  }
+  return count;	
+}
+
 Bowling.KickOneFrame = function(x, y, callback) {
-  init.ball.setVelocity([10, 0, -100]);
+  var vd = Bowling.NormalizeGravityXY(x, y);
+  init.ball.setVelocity([vd[1], 0, vd[0]]);
   Bowling.returnScore = callback;
+}
+
+Bowling.NormalizeGravityXY = function(velocity, direction) {
+  //velocity : from -70 ~ -120
+  //direction : from -30 ~ 30
+  var velocity = -70 + -50 * Math.random();
+  var direction = -30 + 60 * Math.random();
+  //var direction = -30 ;
+  return [velocity, direction];
 }

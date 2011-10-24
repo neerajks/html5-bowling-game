@@ -1,5 +1,6 @@
 Bowling.BOTTLE_MODE = "models/bottle.js";
-Bowling.BOTTLE_IMG = "images/bottlepic512.png";
+Bowling.BOTTLE_IMG = "images/bottlepic.png";
+Bowling.BOTTLE_Z_SPAN = 30;
 
 Bowling.Bottle = function(webgl, position, gravityEngine) {
   Bowling.Object.call(this);
@@ -73,7 +74,7 @@ Bowling.Bottle.prototype.isKicked = function() {
   var yp = new THREE.Vector3(this.current_position[0], 
       this.current_position[1], this.current_position[2]);
   var distance = xp.distanceTo(yp);
-  if ( distance < 1) {
+  if ( distance < 3) {
     return false;
   } else {
     return true;
