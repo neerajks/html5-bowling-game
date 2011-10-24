@@ -17,7 +17,7 @@ var room = {
     join: function() {
 
         var urls = document.location.toString().replace('http://', 'ws://').replace('https://', 'wss://');
-        var location = urls.substring(0, urls.indexOf("bowling")) + "bowling/bajax/";
+        var location = urls.substring(0, urls.indexOf("bowlingsvn")) + "bowlingsvn/bajax/";  
         this._ws = new WebSocket(location, "bajax");
         this._ws.onopen = this._onopen;
         this._ws.onmessage = this._onmessage;
@@ -84,8 +84,8 @@ var room = {
 			  });
 			} else if (result.status == 4){
 			   VUI.hideMainMessage();
-			   VUI.showWinname(result.winer[0]);
-			   VUI.showWinscore(result.winer[1]);
+			   VUI.showWinname(result.winer[0],result.winer[1]);
+			   VUI.showWinscore();
 			   VUI.showEndingWraper();
 			   window.setTimeout(VUI.refresh,10000);
 

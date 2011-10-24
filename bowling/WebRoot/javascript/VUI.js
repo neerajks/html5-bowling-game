@@ -65,14 +65,14 @@
   hideEndingWraper: function(){
 	  $('ending_wrapper').style.display='none';
   }, 
-  showWinname: function(message){
-	  $('name').innerHTML = message;
+  showWinname: function(message,socre){
+	  $('name').innerHTML = message+"("+socre+")的高分";
   }, 
   hideWinname: function(){
 	  $('name').innerHTML = '';
   }, 
-  showWinscore: function(message){
-	  $('winner').innerHTML = message;
+  showWinscore: function(){
+	  $('winner').innerHTML = '赢得了比赛。 ';
   },
   hideWinscore: function(){
 	  $('winner').innerHTML = '';
