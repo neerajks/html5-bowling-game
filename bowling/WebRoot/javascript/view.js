@@ -60,7 +60,8 @@ var room = {
 			  room.setscore(username, result.scorearray, result.totalscore, 'tr' + joinnumber);
 			  
 			  var currrentusername = result.currrentusername;
-			  VUI.showMainMessage(currrentusername + "正在扔球，其他玩家请等候..."); 
+			  VUI.showMainMessage(currrentusername + "正在扔球，其他玩家请等候...");
+			  room.trAddCss(joinnumber);
 			} else if (result.status == 3) {
 			  VUI.hideMainMessage();
 			  var ax = result.ax;
@@ -78,14 +79,16 @@ var room = {
                 var encoded_check = JSON.stringify(jsonBody);
 				room.setScoreByFrameAndOrder(room.order, score, current_frame);
 				VUI.showMainMessage(next_username + "正在扔球，其他玩家请等候..."); 
+				room.trAddCss(room.order);
 			    room._send(encoded_check);
 			  });
-			} else if (result.status == 4) {
+			} else if (result.status == 4){
 			   VUI.hideMainMessage();
-			   room.deleteTd('tr1');
-			   room.deleteTd('tr2');
-			   room.deleteTd('tr3');
-			   VUI.showWaitWrapper();
+			   VUI.showWinname(result.winer[0]);
+			   VUI.showWinscore(result.winer[1]);
+			   VUI.showEndingWraper();
+			   window.setTimeout(VUI.refresh,10000);
+
 			}
         }
     },
@@ -108,8 +111,49 @@ var room = {
 	  console.log("room.order:" + order);
 	  console.log("score:" + score);
 	  console.log("current_frame:" + current_frame);
+	  
+	  var id = "tr" + order;
+	 // var totalsocre=
+	  var td = document.querySelector("#" + id + " > td:nth-child(" + (current_frame+2) + ")");
+	  td.innerHTML = score;
 	},
-	
+	trAddCss: function(order){
+		id='tr'+order;
+		var count=0;
+		 if($('tr1')){
+			 count++;
+			$('tr1').className='';
+		 }
+		 if($('tr2')){
+			 count++;
+			$('tr2').className='';
+		 }
+		 if($('tr3')){
+			 count++;
+		 	$('tr3').className='';
+		 }
+		 if(count==1){
+			 $(id).className='changeColor';
+			 return;
+		 }else if(count==2){
+			 if(order==2){
+				 $('tr1').className='changeColor';
+		 	}else{
+		 		$('tr2').className='changeColor';
+		 	}
+		 }else if(count==3){
+			 if(order==1){
+				 $('tr2').className='changeColor';
+				 return;
+			 }
+			 if(order==2)
+				 $('tr3').className='changeColor';
+			 else
+				 $('tr1').className='changeColor';
+		 }
+		 
+		
+	},
     setscore: function(username, scoreArray, totalScore, id) {
         if (scoreArray != undefined) {
             if ($(id) == undefined) {

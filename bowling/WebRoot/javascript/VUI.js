@@ -1,4 +1,4 @@
-var VUI = {
+﻿var VUI = {
   showMainMessage: function(message) {
 	$('main-message').style.display = 'block';
     $('main-message').innerHTML=message;
@@ -35,24 +35,46 @@ var VUI = {
   showWaitingMessage: function(message) {
     $('wait_user').innerHTML = message;
   },
+ 
   
   hideWaitingMessage: function() {
     $('wait_user').style.display='none';
   },
-
   
   refresh: function(){
 	  
 	  VUI.hidePlayer1();
 	  VUI.hidePlayer2();
 	  VUI.hidePlayer3();
-	  if($('tr1')!=undefined)
- 		 room.deleteTd('tr1');
+	  if($('tr1')!=undefined) {
+ 		 room.deleteTd('tr1');}
  	  if($('tr2')!=undefined)
  		 room.deleteTd('tr2');
  	  if($('tr3')!=undefined)
  		 room.deleteTd('tr3');
  	  VUI.hideMainMessage();
+ 	  VUI.hideEndingWraper();
+ 	  VUI.hideWaitingMessage();
 	  VUI.showWaitWrapper();
-  }  
+  },
+  
+  showEndingWraper : function(){
+		$('ending_wrapper').style.display='block';
+  },
+  
+  hideEndingWraper: function(){
+	  $('ending_wrapper').style.display='none';
+  }, 
+  showWinname: function(message){
+	  $('name').innerHTML = message;
+  }, 
+  hideWinname: function(){
+	  $('name').innerHTML = '';
+  }, 
+  showWinscore: function(message){
+	  $('winner').innerHTML = message;
+  },
+  hideWinscore: function(){
+	  $('winner').innerHTML = '';
+  }
 }
