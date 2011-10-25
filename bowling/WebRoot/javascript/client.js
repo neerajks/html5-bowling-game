@@ -239,40 +239,35 @@ function init() {
     	room.close();
     }
 }
-
+var currentangle;
+var M=1;
 function registerThrowEvent() {
     if (window.DeviceOrientationEvent) {
-        var starttime = 0;
-        var endtime = 0;
         var maxangle = -Infinity;
         var minangle = Infinity;
-        var xangle;
+        var ax;
         var az;
         
         window.addEventListener('deviceorientation',
         function(e) {
 			var beta = e.beta;
 			//room.notice = '请晃动您的平板！';
+			currentangle=beta;
 			if (beta < minangle) {
 				minangle = beta;
-				starttime = new Date().getTime();
-			}
 			
-			if (beta > maxangle) {
-				maxangle = beta;
-				endtime = new Date().getTime();
 			}
-
-			if (maxangle && minangle && maxangle >= 0 && maxangle - minangle > 93) {
-				room.ay = az * (Math.abs(endtime - starttime) / 1000);
-				room.ax = xangle;
-				console.log(room.ax+"----"+room.ay);
+			if (minangle && currentangle >= 0 && currentangle - minangle > 90) {
+			var vd=returnPadAndIphoneXY(az,ax);
+				room.ay = vd[0];
+				room.ax = vd[1];
+				console.log("m的值："+M);
 				if(room.throwFlag){
 					room.throwFlag = false;
 					room.send();
 					throwBall();
 				}
-				maxangle = -Infinity;
+			  currentangle = -Infinity;
 				minangle = Infinity;
 			}
             
@@ -283,7 +278,8 @@ function registerThrowEvent() {
         function(e) {
             var aig = event.accelerationIncludingGravity;
             az = aig.z;
-            xangle = Math.atan(aig.x / aig.z);
+            ax =aig.x*M;
+            
         },
         false);
     } else if (window.TouchEvent) {
@@ -315,10 +311,11 @@ function registerThrowEvent() {
 			if (Math.abs(xMoved) >= MIN_TOUCH_LENGTH || Math.abs(yMoved) >= MIN_TOUCH_LENGTH || Math.sqrt(xMoved * xMoved + yMoved * yMoved) >= MIN_TOUCH_LENGTH) {
 				var time = new Date().getTime() - startTime;
 				//room.ay=xMoved/time;
-				room.ay = yMoved / time;
-				room.ax = Math.asin(xMoved / yMoved);
-				//alert(1);
-				if(room.throwFlag){
+				var vd=returnThouchEventXY(yMoved / time,Math.asin(xMoved / yMoved));
+				room.ay = vd[0];
+				room.ax = vd[1];
+				
+				if(room.throwFlag && room.ax){
 					room.throwFlag = false;
 					room.send();
 					throwBall();
@@ -330,6 +327,60 @@ function registerThrowEvent() {
         },
         false);
     }
+}
+
+function returnThouchEventXY(az, ax){
+	console.log(az+"+++++"+ax);
+	if(ax<0.1 && ax>0)
+		 ax=-6;
+	else if(ax<0.2 && ax>0.1)
+		ax=-10;
+	else if(ax<0.3 && ax>0.2)
+		ax=-12;
+	else if(ax<0.4 && ax>0.3)
+		ax=-15;
+	else if(ax>0.4)
+		ax=-20;
+	else if(ax<0 && ax>-0.1)
+		ax=6;
+	else if(ax<-0.1 && ax>-0.2)
+		ax=10;
+	else if(ax<-0.2 && ax>-0.3)
+		ax=12;
+	else if(ax<-0.3 && ax>-0.4)
+		ax=25;
+	else if(ax<-0.4)
+		ax=20;
+	return [-90, ax];
+}
+function returnPadAndIphoneXY(az, ax){
+	console.log(az+"+++++++"+ax);
+	var velocity=-90;
+	var direction;
+	if(ax>0 && ax<1)
+		direction=3
+	else if(ax>1 && ax<2)
+		direction=10;
+	else if(ax>2 && ax<3)
+		direction=15;
+	else if(ax>3 && ax<4)
+		direction=20
+	else if(ax<0 && ax>-1)
+		direction=-3;
+	else if(ax<-1 && ax>-2)
+		direction=-10;
+	else if(ax>-3 && ax<-2)
+		direction=15;
+	else if(ax<-3 && ax>-4)
+		direction=-20;
+	else if(ax<-4)
+		direction=-25;
+	else if(ax>4)
+		direction=25;
+	
+		//velocity=-90;
+		console.log("velocity======="+velocity);
+	return [velocity, direction];
 }
 
 var ballSize = 80;
@@ -345,11 +396,14 @@ function checkSupport() {
     var matchIos = iosBrowserPattern.exec(ua);
     var matchiphone=iphoneBrowserPatern.exec(ua);
     var matchAndroid = androidBrowserPattern.exec(ua);
-    if (matchIos && matchIos[1] == 'iPad' || matchAndroid && matchAndroid[1] >= 3){ 
+    if ( matchAndroid && matchAndroid[1] >= 3){ 
     	isPad = true;room.notice='请晃动您的平板！';
-    }else if(/(iPhone|iPad|iPod)/i.test(ua)){
+    	M=-1;
+    }else if(/(iPhone|iPod)/i.test(ua)){
     	isPad=true;
     	room.notice='请晃动您的手机！';
+    }else if(matchIos && matchIos[1] == 'iPad' ){
+    	isPad = true;room.notice='请晃动您的平板！';
     }
     return (matchIos || matchAndroid) && (window.DeviceOrientationEvent || window.TouchEvent);
 }
