@@ -18,7 +18,8 @@ function xhr(method, uri, body, handler) {
     req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
     req.send(body);
 }
-
+var isPad = false;
+var isTouchEvent = false;
 var room = {
     login: function() {
         room.username = $F('username');
@@ -47,7 +48,7 @@ var room = {
         UI.showGameMode();
 	  } else if (m.status == "1") {
      	UI.hideLoginForm(); 
-		UI.showMainMessage('游戏正在创建，稍后登陆！');
+		UI.showMainMessage('游戏正在创建，稍后登陆！',isPad);
 		setTimeout(room.login, 500);
 	  } else if (m.status == "2") {
 	    UI.hideMainMessage();
@@ -63,10 +64,10 @@ var room = {
 		setTimeout(room.checkuserstatus, 500);
 	  } else if (m.status == "3") {
 		UI.hideLoginForm();
-		UI.showMainMessage('游戏人数已满，请等候下一局！');
+		UI.showMainMessage('游戏人数已满，请等候下一局！',isPad);
 	  } else if (m.status == "8") {
 	    UI.hideLoginForm();
-	    UI.showMainMessage('服务器未连接，请重新刷新页面！');
+	    UI.showMainMessage('服务器未连接，请重新刷新页面！',isPad);
 	  }
 	},
 	
@@ -91,19 +92,19 @@ var room = {
 	  } else if (room.status == "5") {
 	    UI.hideWaitingOthersMessage();
 		UI.hideGameMode();
-		UI.showMainMessage("其他玩家正在抛球，请您等候");
+		UI.showMainMessage("其他玩家正在抛球，请您等候",isPad);
         jsonpoll["status"] = "5";
         jsonpoll["order"] = room.order;    		
 	  } else if (room.status == "6") {
 		room.throwFlag=true;
 	    UI.hideGameMode();
 	    UI.hideWaitingOthersMessage();
-		UI.showMainMessage(room.notice);
+		UI.showMainMessage(room.notice,isPad);
 	    return;
 	  } else if (room.status == "8") {
 	    UI.hideGameMode();
 	    UI.hideWaitingOthersMessage();
-		UI.showMainMessage('服务器未连接，请重新刷新页面！');
+		UI.showMainMessage('服务器未连接，请重新刷新页面！',isPad);
 		return;
 	  } else if (room.status == "9") {
 	    jsonpoll["status"] = "9";
@@ -197,13 +198,13 @@ var room = {
 		  setTimeout(room.checkuserstatus, 500);
 		} else {
 		   room.status = "9";
-		   UI.showMainMessage('本局结束，请等待最后结果，感谢您的参与！');
+		   UI.showMainMessage('本局结束，请等待最后结果，感谢您的参与！',isPad);
 		   setTimeout(room.checkuserstatus, 500);
 		}
 	  } else if (room.status == "8") { 
 	    UI.hideSocreInfo();
 		UI.hideMainMessage();
-		UI.showMainMessage('服务器未连接，请重新刷新页面！');
+		UI.showMainMessage('服务器未连接，请重新刷新页面！',isPad);
 	  } 
 	},
 	
@@ -292,7 +293,7 @@ function registerThrowEvent() {
         var MIN_TOUCH_LENGTH = 100; // in pixel
         var startTime;
         room.notice = '请滑动屏幕！';
-
+        isTouchEvent=true;
         document.addEventListener('touchmove',
         function(e) {
             var touches = e.touches.item(0);
@@ -333,7 +334,7 @@ function registerThrowEvent() {
 
 var ballSize = 80;
 var throwBallTimer;
-var isPad = false;
+
 var ballTargetTop = 200;
 
 function checkSupport() {
