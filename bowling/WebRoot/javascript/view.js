@@ -17,7 +17,7 @@ var room = {
     join: function() {
 
         var urls = document.location.toString().replace('http://', 'ws://').replace('https://', 'wss://');
-        var location = urls.substring(0, urls.indexOf("bowlingsvn")) + "bowlingsvn/bajax/";  
+        var location = urls.substring(0, urls.indexOf("bowling")) + "bowling/bajax/";  
         this._ws = new WebSocket(location, "bajax");
         this._ws.onopen = this._onopen;
         this._ws.onmessage = this._onmessage;
@@ -48,6 +48,8 @@ var room = {
 			  var joinnumber = result.joinnumber;
 			  room.order = joinnumber;
 			  var lacknumber = numbercount - joinnumber;
+			  VUI.showScoreWraper();
+			  VUI.showloginMessage(username);
 			  VUI.showWaitingMessage(username + "参与了" + numbercount +"人游戏，还缺" + lacknumber + "人");
 			  room.setThInfors(result.scorearray.length, 'th_infors');
 			  room.setscore(username, result.scorearray, result.totalscore, 'tr' + joinnumber);
@@ -55,6 +57,7 @@ var room = {
 			  init.audio.stop(Bowling.START_BACKGROUND_MUSIC);
 			  init.audio.play(Bowling.Ball_BACKGROUND_MUSIC,true);
 			  VUI.hideWaitWrapper();
+			  VUI.showScoreWraper();
 			  var joinnumber = result.joinnumber;
 			  room.order = joinnumber;
 			  room.setThInfors(result.scorearray.length, 'th_infors');
@@ -210,8 +213,8 @@ var room = {
         var url = 'http://' + location.host + '/bowling/mobileball.html';
         $('client-url').innerHTML = url;
         $('client-url').setAttribute('href', url);
-        var width = 180;
-        var height = 180;
+        var width = 144;
+        var height = 144;
         qrCode.style.backgroundImage = 'url(http://chart.apis.google.com/chart?chs=' + width + 'x' + height + '&cht=qr&chld=L%7C1&choe=UTF-8&chl=BEGIN%3AVCARD%0AVERSION%3A3.0%0AURL%3A' + url + '%0AEND%3AVCARD)';
     }
 };
