@@ -13,39 +13,27 @@
   showWaitWrapper: function() {
 	    $('waiting-zone').style.display='';
   },
-  showPlayer1: function(message){
-	  $('player1').innerHTML=message;
+  showScoreWraper: function() {
+	    $('scores-wrapper').style.display='block';
   },
-  hidePlayer1: function(){
-	  $('player1').style.display='none';
-  },
-  hidePlayer2: function(){
-	  $('player2').style.display='none';
-  },
-  hidePlayer3: function(){
-	  $('player3').style.display='none';
-  },
-  showPlayer2: function(message){
-	  $('player2').innerHTML=message;
-  },
-  showPlayer3: function(message){
-	  $('player3').innerHTML=message;
-  },
-  
+  hideScoreWraper: function(){
+	    $('scores-wrapper').style.display='none';
+ },
   showWaitingMessage: function(message) {
     $('wait_user').innerHTML = message;
   },
- 
-  
+  showloginMessage: function(message){
+	$('login').innerHTML = "玩家："+message+"已登陆！";
+  },
+  hideloginMessage: function(){
+	$('login').innerHTML = '';
+  },
   hideWaitingMessage: function() {
     $('wait_user').style.display='none';
   },
   
   refresh: function(){
-	  
-	  VUI.hidePlayer1();
-	  VUI.hidePlayer2();
-	  VUI.hidePlayer3();
+
 	  if($('tr1')!=undefined) {
  		 room.deleteTd('tr1');}
  	  if($('tr2')!=undefined)
@@ -54,8 +42,11 @@
  		 room.deleteTd('tr3');
  	  VUI.hideMainMessage();
  	  VUI.hideEndingWraper();
- 	  VUI.hideWaitingMessage();
+ 	  VUI.showWaitingMessage("等待玩家进入...");
+ 	  $('login').innerHTML = '';
+ 	  VUI.hideScoreWraper();
 	  VUI.showWaitWrapper();
+	  VUI.sh
 	  init.audio.stop(Bowling.Ball_BACKGROUND_MUSIC);
 	  init.audio.play(Bowling.START_BACKGROUND_MUSIC,true);
   },

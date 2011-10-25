@@ -95,6 +95,7 @@ var room = {
         jsonpoll["status"] = "5";
         jsonpoll["order"] = room.order;    		
 	  } else if (room.status == "6") {
+		room.throwFlag=true;
 	    UI.hideGameMode();
 	    UI.hideWaitingOthersMessage();
 		UI.showMainMessage(room.notice);
@@ -133,7 +134,7 @@ var room = {
 	  jsonpoll.order = room.order;
 	  var encoded_check = JSON.stringify(jsonpoll);
 	  xhr('POST', 'bajax/resetgame', encoded_check, function(result) {
-	    console.log(result);
+	    //console.log(result);
 	  });
 	  
 	},
@@ -172,7 +173,7 @@ var room = {
 	  if (result && result.status) {
 	    room.status = result.status;
 	  }
-	  console.log(room.status);
+	  //console.log(room.status);
 	  if (room.status == "7") {
 		throwBall();
         var jsonpoll = {};
@@ -183,15 +184,15 @@ var room = {
           xhr('POST', 'bajax/poll', encoded_check, room.waitForScore);
 		}, 500);
 	  } else if (room.status == "5") {
-	    console.log(result.currentframe);
-		console.log(result.totalscore);
+	    //console.log(result.currentframe);
+		//console.log(result.totalscore);
 	    $('#current-inning-score').html(result.currentframe);
         $('#total-score').html(result.totalscore);
         UI.showScoreInfo();
         UI.showGameInfo(room.username);
 		room.isSending = false;
-		console.log(result.currentframe);
-		console.log(result.rounds);
+		//console.log(result.currentframe);
+		//console.log(result.rounds);
 	    if (result.currentframe != result.rounds) {
 		  setTimeout(room.checkuserstatus, 500);
 		} else {
@@ -264,9 +265,12 @@ function registerThrowEvent() {
 			if (maxangle && minangle && maxangle >= 0 && maxangle - minangle > 93) {
 				room.ay = az * (Math.abs(endtime - starttime) / 1000);
 				room.ax = xangle;
-				room.throwFlag = false;
-				room.send();
-				throwBall();
+				console.log(room.ax+"----"+room.ay);
+				if(room.throwFlag){
+					room.throwFlag = false;
+					room.send();
+					throwBall();
+				}
 				maxangle = -Infinity;
 				minangle = Infinity;
 			}
@@ -313,9 +317,11 @@ function registerThrowEvent() {
 				room.ay = yMoved / time;
 				room.ax = Math.asin(xMoved / yMoved);
 				//alert(1);
-				room.throwFlag = false;
-				room.send();
-				throwBall();
+				if(room.throwFlag){
+					room.throwFlag = false;
+					room.send();
+					throwBall();
+				}
 				startClientY = null;
 				startClientX = null;
             }
