@@ -140,16 +140,31 @@ Bowling.ComputeKickedBottle = function() {
 }
 
 Bowling.KickOneFrame = function(x, y, callback) {
-  var vd = Bowling.NormalizeGravityXY(x, y);
+  var vd = Bowling.NormalizeGravityXY(x, y).slice();
   init.ball.setVelocity([vd[1], 0, vd[0]]);
   Bowling.returnScore = callback;
 }
 
-Bowling.NormalizeGravityXY = function(velocity, direction) {
+Bowling.NormalizeGravityXY = function(velocity, direction){
   //velocity : from -70 ~ -120
   //direction : from -30 ~ 30
-  var velocity = -70 + -50 * Math.random();
-  var direction = -30 + 60 * Math.random();
+//  if(isThouchEvent){
+//	  var vd=Bowling.returnThouchEventXY(velocity, direction);
+//	  velocity=vd[0];
+//	  direction=vd[1];
+//  }else{
+//	  var vd=Bowling.returnPadAndIphoneXY(velocity, direction);
+//	  velocity=vd[0];
+//	  direction=vd[1];
+//  }
+ //var velocity = -70 + -50 * Math.random();
+ //var direction = -30 + 60 * Math.random();
   //var direction = -30 ;
-  return [velocity, direction];
+  //return [velocity, direction];
+  var v = Math.round(velocity);
+  var d = Math.round(direction);
+  console.log(v+"---"+d);
+  return [v, d];
 }
+
+
