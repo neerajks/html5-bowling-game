@@ -39,8 +39,11 @@ var UI = {
   },
 
   showMainMessage: function(message,ispad) {
-	if(isPad)
+	if(isPad){
 		$('#main-message').css('background-image', 'url(images/popup_backgroud.png)');
+		$('#main-message').css("width","214px");
+		$('#main-message').css("height","107px");
+	}
     $('#main-message').show().text(message);
   },
 
