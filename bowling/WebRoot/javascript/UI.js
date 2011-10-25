@@ -38,7 +38,9 @@ var UI = {
     $('#start-game-tip-message').hide();
   },
 
-  showMainMessage: function(message) {
+  showMainMessage: function(message,ispad) {
+	if(isPad)
+		$('#main-message').css('background-image', 'url(images/popup_backgroud.png)');
     $('#main-message').show().text(message);
   },
 
