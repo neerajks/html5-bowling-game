@@ -148,19 +148,8 @@ Bowling.KickOneFrame = function(x, y, callback) {
 Bowling.NormalizeGravityXY = function(velocity, direction){
   //velocity : from -70 ~ -120
   //direction : from -30 ~ 30
-//  if(isThouchEvent){
-//	  var vd=Bowling.returnThouchEventXY(velocity, direction);
-//	  velocity=vd[0];
-//	  direction=vd[1];
-//  }else{
-//	  var vd=Bowling.returnPadAndIphoneXY(velocity, direction);
-//	  velocity=vd[0];
-//	  direction=vd[1];
-//  }
- //var velocity = -70 + -50 * Math.random();
- //var direction = -30 + 60 * Math.random();
-  //var direction = -30 ;
-  //return [velocity, direction];
+
+ 
   var v = Math.round(velocity);
   var d = Math.round(direction);
   console.log(v+"---"+d);
