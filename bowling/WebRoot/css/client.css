@@ -115,6 +115,7 @@ ul#waiting-others-message > li {
   text-align: left;
   padding: 25px 30px 0 30px;
   background: url(../images/notice.png);
+}
 
 #game-result {
   width: 264px;
