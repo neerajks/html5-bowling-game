@@ -8,7 +8,7 @@ import com.bowling.login.User;
 
 public class Constant {
   
-  public final static int ROUNDS = 3;
+  public final static int ROUNDS = 5;
   
   public static int current_order = 1;
   public static User[] USERArray = new User[4];
