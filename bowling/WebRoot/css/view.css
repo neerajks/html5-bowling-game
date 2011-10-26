@@ -124,9 +124,9 @@ tbody > tr:last-child > td {
 
 #main-message {
   display: none;
-  width: 197px;
+  width: 177px;
   height: 90px;
-  padding: 65px 30px 30px 30px;
+  padding: 65px 40px 30px 40px;
   text-align: left;
   color: white;
   background: transparent url(../images/waiting_message_bg.png) 0 0 no-repeat;
@@ -162,7 +162,7 @@ tbody > tr:last-child > td {
   background: transparent url(../images/ending.png) 0 0 no-repeat;
 }
 #text_end{
-  width:150px;
+  width:150px; 
   height:150px;
   margin:0 auto;
 }
